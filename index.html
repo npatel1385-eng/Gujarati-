@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Sheekho Gujarati — Std 1 to 10 Course</title>
+<meta name="theme-color" content="#23264a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Gujarati">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2323264a'/%3E%3Ctext x='50' y='72' font-size='62' text-anchor='middle' fill='%23F3A52E' font-family='sans-serif' font-weight='bold'%3E%E0%AA%97%E0%AB%81%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%2323264a'/%3E%3Ctext x='50' y='72' font-size='62' text-anchor='middle' fill='%23F3A52E' font-family='sans-serif' font-weight='bold'%3E%E0%AA%97%E0%AB%81%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=Noto+Sans+Gujarati:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF6EC; --paper-2:#F3EAD6; --card:#FFFDF7;
+    --ink:#21243D; --ink-soft:#5b5f7d; --ink-faint:#9a9bb0;
+    --marigold:#F3A52E; --marigold-deep:#DE7C1B;
+    --leaf:#2F7D5B; --leaf-soft:#e4f0e8;
+    --rose:#C8476A;
+    --line:#E6DBC0; --line-soft:#efe7d2;
+    --indigo:#23264a;
+    --shadow:0 1px 2px rgba(33,36,61,.06), 0 8px 24px rgba(33,36,61,.07);
+    --display:'Bricolage Grotesque',system-ui,sans-serif;
+    --body:'Inter',system-ui,sans-serif;
+    --guj:'Noto Sans Gujarati','Inter',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .guj{font-family:var(--guj)}
+  header.bar{position:sticky;top:0;z-index:50;background:var(--indigo);color:#fff;
+    display:flex;align-items:center;gap:16px;padding:12px 20px;border-bottom:3px solid var(--marigold)}
+  .brand{display:flex;align-items:baseline;gap:10px;cursor:pointer}
+  .brand .mark{font-family:var(--guj);font-weight:700;font-size:26px;color:var(--marigold);line-height:1}
+  .brand .name{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01em}
+  .brand .name small{display:block;font-size:11px;font-weight:500;color:#b9bbd6}
+  .bar-spacer{flex:1}
+  .who{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+    border-radius:999px;padding:5px 6px 5px 14px;cursor:pointer;font-size:13px;font-weight:600}
+  .who .avatar{width:26px;height:26px;border-radius:50%;background:var(--marigold);color:var(--indigo);
+    display:grid;place-items:center;font-weight:800;font-size:13px}
+  .who:hover{background:rgba(255,255,255,.14)}
+  main{max-width:1040px;margin:0 auto;padding:24px 20px 80px}
+  .hero{background:var(--indigo);color:#fff;border-radius:22px;padding:34px 32px;position:relative;overflow:hidden;margin-bottom:14px}
+  .hero .big{font-family:var(--guj);position:absolute;right:-6px;top:-30px;font-size:210px;line-height:1;
+    color:rgba(243,165,46,.16);font-weight:700;pointer-events:none;user-select:none}
+  .hero h1{font-family:var(--display);font-size:clamp(26px,5vw,40px);font-weight:800;letter-spacing:-.02em;max-width:20ch;position:relative}
+  .hero h1 em{font-style:normal;color:var(--marigold)}
+  .hero p{margin-top:12px;max-width:52ch;color:#c9cbe4;font-size:15px;position:relative}
+  .hero .meta{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px;position:relative}
+  .chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:999px;
+    padding:7px 14px;font-size:13px;font-weight:600;color:#e9eaf6}
+  .chip b{color:var(--marigold)}
+  .std-block{margin-top:26px}
+  .std-head{display:flex;align-items:baseline;gap:12px;margin:0 2px 14px}
+  .std-head .n{font-family:var(--display);font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--marigold-deep);background:#fbeccf;border-radius:8px;padding:4px 10px;white-space:nowrap}
+  .std-head h2{font-family:var(--display);font-size:19px;font-weight:700;letter-spacing:-.01em}
+  .std-head .rule{flex:1;height:2px;background:var(--line)}
+  .modules{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:14px}
+  .mod{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:18px;cursor:pointer;
+    transition:transform .15s,box-shadow .15s,border-color .15s;position:relative;text-align:left}
+  .mod:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--marigold)}
+  .mod .tag{font-family:var(--display);font-size:11px;font-weight:700;color:var(--ink-faint);letter-spacing:.05em;text-transform:uppercase}
+  .mod .glyphset{font-family:var(--guj);font-size:26px;color:var(--ink);margin:8px 0 6px;font-weight:600;letter-spacing:2px}
+  .mod h3{font-family:var(--display);font-size:16px;font-weight:700;letter-spacing:-.01em}
+  .mod p{font-size:12.5px;color:var(--ink-soft);margin-top:4px}
+  .mod .foot{margin-top:12px;display:flex;align-items:center;gap:8px}
+  .pbar{flex:1;height:7px;background:var(--paper-2);border-radius:999px;overflow:hidden}
+  .pbar i{display:block;height:100%;background:var(--leaf);border-radius:999px;width:0;transition:width .4s}
+  .mod .pct{font-size:12px;font-weight:700;color:var(--ink-soft);min-width:34px;text-align:right}
+  .done-badge{position:absolute;top:12px;right:12px;width:24px;height:24px;border-radius:50%;background:var(--leaf);
+    color:#fff;display:none;place-items:center;font-size:13px;font-weight:800}
+  .mod.complete .done-badge{display:grid}
+  .mod.complete{border-color:var(--leaf)}
+  .lesson{display:none}
+  .lesson.active{display:block;animation:fade .25s}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .crumbs{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+  .back{background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:8px 14px;
+    font-weight:600;font-size:13px;cursor:pointer;color:var(--ink)}
+  .back:hover{border-color:var(--marigold)}
+  .lesson-head h2{font-family:var(--display);font-size:25px;font-weight:800;letter-spacing:-.02em}
+  .lesson-head .sub{color:var(--marigold-deep);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+  .lesson-head p{color:var(--ink-soft);margin-top:8px;max-width:64ch;font-size:15px}
+  .lesson-head .note{margin-top:14px;background:var(--leaf-soft);border:1px solid #cfe6d8;border-left:4px solid var(--leaf);
+    border-radius:10px;padding:12px 16px;font-size:14px;color:#1f5a40}
+  .lesson-head .note b{color:#16432f}
+  .tabs{display:flex;gap:8px;margin:20px 0 18px;flex-wrap:wrap}
+  .tab{background:var(--card);border:1.5px solid var(--line);border-radius:999px;padding:9px 18px;font-weight:600;
+    font-size:14px;cursor:pointer;color:var(--ink-soft)}
+  .tab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .tab:not(.on):hover{border-color:var(--marigold);color:var(--ink)}
+  .pane{display:none}.pane.on{display:block}
+  .lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(136px,1fr));gap:12px}
+  .lcard{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:14px 10px;text-align:center;
+    cursor:pointer;transition:transform .14s,border-color .14s,box-shadow .14s;position:relative}
+  .lcard:hover{transform:translateY(-3px);border-color:var(--marigold);box-shadow:var(--shadow)}
+  .lcard .g{font-family:var(--guj);font-size:46px;line-height:1;color:var(--ink);font-weight:600}
+  .lcard .rom{margin-top:6px;font-family:var(--display);font-weight:700;font-size:15px}
+  .lcard .en{font-size:11.5px;color:var(--ink-soft);margin-top:2px}
+  .lcard .rare{position:absolute;top:7px;right:7px;font-size:8.5px;font-weight:700;text-transform:uppercase;
+    color:var(--marigold-deep);background:#fbeccf;border-radius:6px;padding:2px 5px}
+  .wordlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
+  .word{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;cursor:pointer;transition:.14s}
+  .word:hover{border-color:var(--marigold);transform:translateY(-2px);box-shadow:var(--shadow)}
+  .word .ww{font-family:var(--guj);font-size:30px;font-weight:600;color:var(--ink)}
+  .word .wr{font-family:var(--display);font-weight:700;font-size:14px;margin-top:3px}
+  .word .wm{font-size:13px;color:var(--ink-soft)}
+  .cons-picker{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
+  .cbtn{font-family:var(--guj);font-size:22px;font-weight:600;width:46px;height:46px;border-radius:11px;
+    border:1.5px solid var(--line);background:var(--card);cursor:pointer;color:var(--ink);transition:.12s}
+  .cbtn:hover{border-color:var(--marigold)}
+  .cbtn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .range-tabs{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+  .rtab{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:8px 14px;font-weight:600;
+    font-size:13px;cursor:pointer;color:var(--ink-soft)}
+  .rtab.on{background:var(--marigold);border-color:var(--marigold);color:var(--indigo)}
+  .rtab:not(.on):hover{border-color:var(--marigold)}
+  .lesson-body{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:22px 24px;max-width:760px}
+  .lesson-body p{color:var(--ink-soft);font-size:15px;margin-bottom:12px}
+  .lesson-body h4{font-family:var(--display);font-size:16px;font-weight:700;margin:18px 0 8px}
+  .lesson-body .ex{font-family:var(--guj);font-size:18px;color:var(--ink)}
+  .gtable{width:100%;border-collapse:collapse;margin-top:10px;font-size:15px}
+  .gtable th{text-align:left;font-family:var(--display);font-size:12px;text-transform:uppercase;letter-spacing:.05em;
+    color:var(--marigold-deep);padding:8px 10px;border-bottom:2px solid var(--line)}
+  .gtable td{padding:9px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+  .gtable td.g{font-family:var(--guj);font-size:20px;font-weight:600;white-space:nowrap}
+  .gtable tr:hover td{background:var(--paper)}
+  .scrim{position:fixed;inset:0;background:rgba(33,36,61,.55);backdrop-filter:blur(3px);z-index:90;
+    display:none;align-items:center;justify-content:center;padding:18px}
+  .scrim.show{display:flex;animation:fade .2s}
+  .detail{background:var(--paper);border-radius:22px;max-width:520px;width:100%;max-height:92vh;overflow:auto;
+    box-shadow:0 30px 80px rgba(0,0,0,.35);position:relative}
+  .detail .x{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;border:none;
+    background:var(--paper-2);font-size:18px;cursor:pointer;color:var(--ink);z-index:2}
+  .detail .x:hover{background:var(--line)}
+  .detail-top{background:var(--indigo);color:#fff;border-radius:22px 22px 0 0;padding:30px 26px 24px;text-align:center;position:relative;overflow:hidden}
+  .detail-top .ghost{position:absolute;font-family:var(--guj);font-size:200px;color:rgba(255,255,255,.06);right:-10px;bottom:-60px;line-height:1}
+  .detail-top .big{font-family:var(--guj);font-size:96px;line-height:1.1;color:var(--marigold);font-weight:700;position:relative}
+  .detail-top .rom{font-family:var(--display);font-size:23px;font-weight:700;margin-top:6px;position:relative}
+  .speak{margin-top:14px;background:var(--marigold);color:var(--indigo);border:none;border-radius:999px;
+    padding:9px 20px;font-weight:700;font-size:14px;cursor:pointer;position:relative;font-family:var(--body)}
+  .speak:hover{background:#ffb649}
+  .detail-body{padding:22px 26px 26px}
+  .kv{margin-bottom:16px}
+  .kv .k{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--marigold-deep)}
+  .kv .v{font-size:16px;margin-top:3px}
+  .kv .v .gw{font-family:var(--guj);font-weight:600;font-size:22px;margin-right:8px}
+  .kv .v .meaning{color:var(--ink-soft)}
+  .tip{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:14px;color:var(--ink-soft)}
+  .tip b{color:var(--ink)}
+  .trace-wrap{margin-top:18px}
+  .trace-wrap h4{font-family:var(--display);font-size:14px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+  .trace-wrap h4 button{background:none;border:1.5px solid var(--line);border-radius:8px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;color:var(--ink-soft);font-family:var(--body)}
+  .trace-wrap h4 button:hover{border-color:var(--rose);color:var(--rose)}
+  canvas.pad{width:100%;background:#fff;border:1.5px dashed var(--line);border-radius:14px;touch-action:none;display:block;cursor:crosshair;-webkit-user-select:none;user-select:none}
+  #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--ink);color:#fff;
+    padding:12px 18px;border-radius:12px;font-size:13.5px;font-weight:600;z-index:300;max-width:88vw;text-align:center;
+    opacity:0;pointer-events:none;transition:opacity .25s}
+  #toast.show{opacity:1}
+  .quiz{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:26px;max-width:560px;margin:0 auto}
+  .quiz .q-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+  .quiz .q-count{font-size:13px;font-weight:700;color:var(--ink-soft)}
+  .quiz .q-bar{flex:1;height:6px;background:var(--paper-2);border-radius:999px;margin-left:14px;overflow:hidden}
+  .quiz .q-bar i{display:block;height:100%;background:var(--marigold);width:0;transition:width .3s}
+  .quiz .prompt{text-align:center;margin:6px 0 22px}
+  .quiz .prompt .label{font-size:14px;color:var(--ink-soft);font-weight:600;margin-bottom:10px}
+  .quiz .prompt .bigq{font-family:var(--guj);font-size:74px;line-height:1;color:var(--ink);font-weight:600}
+  .quiz .prompt .bigq.small{font-size:40px}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .opt{background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:15px;cursor:pointer;
+    font-weight:600;font-size:17px;text-align:center;transition:.12s;font-family:var(--display)}
+  .opt .og{font-family:var(--guj);font-size:34px;font-weight:600;display:block}
+  .opt:hover{border-color:var(--marigold)}
+  .opt.right{background:var(--leaf);border-color:var(--leaf);color:#fff}
+  .opt.wrong{background:#fbe4ea;border-color:var(--rose);color:var(--rose)}
+  .quiz-done{text-align:center;padding:14px 0}
+  .quiz-done .score{font-family:var(--display);font-size:52px;font-weight:800;color:var(--leaf)}
+  .quiz-done p{color:var(--ink-soft);margin:6px 0 20px}
+  .btn{background:var(--marigold);color:var(--indigo);border:none;border-radius:12px;padding:12px 24px;
+    font-weight:700;font-size:15px;cursor:pointer;font-family:var(--body)}
+  .btn:hover{background:#ffb649}
+  .btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
+  .btn.ghost:hover{border-color:var(--marigold)}
+  .complete-cta{margin:24px auto 0;max-width:560px;text-align:center;background:var(--leaf-soft);
+    border:1.5px solid #cfe6d8;border-radius:16px;padding:20px}
+  .complete-cta p{color:#1f5a40;font-weight:600;margin-bottom:14px}
+  .footer-note{margin-top:44px;text-align:center;color:var(--ink-faint);font-size:13px}
+  #loginScreen{position:fixed;inset:0;z-index:200;background:var(--indigo);display:none;align-items:center;justify-content:center;padding:24px}
+  #loginScreen.show{display:flex;animation:fade .25s}
+  .login-box{width:100%;max-width:420px;text-align:center;color:#fff}
+  .login-mark{font-family:var(--guj);font-size:60px;color:var(--marigold);font-weight:700;line-height:1}
+  .login-box h2{font-family:var(--display);font-size:30px;font-weight:800;margin-top:8px;letter-spacing:-.02em}
+  .login-sub{color:#b9bbd6;font-size:15px;margin:6px 0 26px}
+  .login-cards{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+  .login-card{background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.16);border-radius:18px;
+    padding:22px 18px;cursor:pointer;color:#fff;display:flex;flex-direction:column;align-items:center;gap:12px;min-width:110px;transition:.15s;font-family:var(--body)}
+  .login-card:hover{border-color:var(--marigold);background:rgba(255,255,255,.1);transform:translateY(-2px)}
+  .login-card.sel{border-color:var(--marigold);background:rgba(243,165,46,.16)}
+  .login-card .lc-av{width:52px;height:52px;border-radius:50%;background:var(--marigold);color:var(--indigo);
+    display:grid;place-items:center;font-weight:800;font-size:22px;font-family:var(--display)}
+  .login-card .lc-name{font-weight:700;font-size:15px}
+  .pin-row{display:flex;gap:10px;justify-content:center;margin-top:8px}
+  .pin-row input{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.22);border-radius:12px;
+    padding:13px 16px;font-size:18px;color:#fff;text-align:center;letter-spacing:4px;width:150px;font-family:var(--body);outline:none}
+  .pin-row input::placeholder{color:#9a9cc0;letter-spacing:normal}
+  .pin-row input:focus{border-color:var(--marigold)}
+  .login-error{color:#ffb4b4;font-size:14px;font-weight:600;margin-top:14px;min-height:20px}
+  #parentDash{animation:fade .25s}
+  .dash-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+  .dash-head h2{font-family:var(--display);font-size:24px;font-weight:800;letter-spacing:-.02em}
+  .dash-loading{color:var(--ink-soft)}
+  .kid-card{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow)}
+  .kid-top{display:flex;align-items:center;gap:14px}
+  .kid-av{width:48px;height:48px;border-radius:50%;background:var(--marigold);color:var(--indigo);display:grid;place-items:center;font-weight:800;font-size:22px;font-family:var(--display);flex-shrink:0}
+  .kid-id{flex:1}
+  .kid-id h3{font-family:var(--display);font-size:19px;font-weight:700}
+  .kid-meta{font-size:13px;color:var(--ink-soft)}
+  .kid-pct{font-family:var(--display);font-size:30px;font-weight:800;color:var(--leaf)}
+  .kid-bar{height:9px;background:var(--paper-2);border-radius:999px;overflow:hidden;margin:14px 0 18px}
+  .kid-bar i{display:block;height:100%;background:var(--leaf);border-radius:999px;transition:width .4s}
+  .kid-mods{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:7px}
+  .km{display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:10px;background:var(--paper);border:1px solid var(--line-soft)}
+  .km.kdone{background:var(--leaf-soft);border-color:#cfe6d8}
+  .km-ic{width:19px;height:19px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;background:#e7ddc4;color:#9a8e6e;flex-shrink:0}
+  .km.kdone .km-ic{background:var(--leaf);color:#fff}
+  .km-name{font-size:12.5px;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .km-detail{font-size:10.5px;color:var(--ink-soft);white-space:nowrap}
+  .dash-setup{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:28px;max-width:620px}
+  .dash-setup h2{font-family:var(--display);font-size:22px;font-weight:800;margin-bottom:10px}
+  .dash-setup p{color:var(--ink-soft);font-size:15px;margin-bottom:10px}
+  @media print{
+    body *{visibility:hidden}
+    #worksheet,#worksheet *{visibility:visible}
+    #worksheet{position:absolute;inset:0;display:block!important;padding:0}
+  }
+  #worksheet{display:none}
+  .ws-row{border-bottom:1px solid #ccc;padding:6px 0;display:flex;align-items:center;gap:4px;page-break-inside:avoid}
+  .ws-row .wg{font-family:var(--guj);font-size:52px;color:#bbb;width:120px;text-align:center}
+  .ws-row .wt{font-family:var(--guj);font-size:52px;color:#eee;flex:1;letter-spacing:26px}
+  .ws-head{font-family:var(--display);font-size:22px;font-weight:800;margin:0 0 4px;color:#000}
+  .ws-sub{font-size:13px;color:#444;margin-bottom:18px}
+  @media (max-width:560px){
+    .hero{padding:28px 20px}
+    .detail-top .big{font-size:78px}
+    main{padding:18px 14px 70px}
+  }
+  :focus-visible{outline:3px solid var(--marigold);outline-offset:2px;border-radius:6px}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="brand" onclick="goHome()">
+    <span class="mark guj">ગુ</span>
+    <span class="name">Sheekho Gujarati<small>ધોરણ 1 – 10 · full course</small></span>
+  </div>
+  <div class="bar-spacer"></div>
+  <div class="who" id="whoBtn" onclick="logout()" title="Log out">
+    <span class="avatar" id="whoAvatar">?</span>
+    <span id="whoName">Log in</span>
+  </div>
+</header>
+
+<main>
+  <section id="home"></section>
+  <section class="lesson" id="lesson">
+    <div class="crumbs"><button class="back" onclick="goHome()">← All grades</button></div>
+    <div class="lesson-head">
+      <div class="sub" id="lSub"></div>
+      <h2 id="lTitle"></h2>
+      <p id="lIntro"></p>
+      <div class="note" id="lNote" style="display:none"></div>
+    </div>
+    <div class="tabs" id="lTabs"></div>
+    <div class="pane" id="paneLearn"></div>
+    <div class="pane" id="paneQuiz"></div>
+  </section>
+  <section id="parentDash" style="display:none"></section>
+</main>
+
+<div class="scrim" id="scrim" onclick="if(event.target===this)closeDetail()">
+  <div class="detail" id="detail"></div>
+</div>
+
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-mark guj">ગુ</div>
+    <h2>Sheekho Gujarati</h2>
+    <p class="login-sub">Tap your name, then type your PIN.</p>
+    <div class="login-cards" id="loginCards"></div>
+    <div class="pin-row" id="pinRow" style="display:none">
+      <input id="pinInput" type="password" inputmode="numeric" maxlength="8" placeholder="PIN"
+        onkeydown="if(event.key==='Enter')tryLogin()">
+      <button class="btn" onclick="tryLogin()">Log in</button>
+    </div>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<div id="worksheet"></div>
+<div id="toast"></div>
+
+<script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore-compat.js"></script>
+
+<script>
+/* =========================================================
+   1) ACCOUNTS  (names + PINs)
+   ========================================================= */
+const ACCOUNTS=[
+  {user:'suhagi', name:'Suhagi', pin:'1111', role:'learner'},
+  {user:'suhana', name:'Suhana', pin:'2222', role:'learner'},
+  {user:'parent', name:'Parent', pin:'0000', role:'parent'},
+];
+/* =========================================================
+   2) FIREBASE  (cloud progress tracking)
+   ========================================================= */
+const FIREBASE_CONFIG={
+  apiKey:"AIzaSyBl-k4km2E74NG_f7z54kH8TX63X8rDGeA",
+  authDomain:"gujarati-101.firebaseapp.com",
+  projectId:"gujarati-101",
+  storageBucket:"gujarati-101.firebasestorage.app",
+  messagingSenderId:"921059775587",
+  appId:"1:921059775587:web:668ee54907f478a7aa5456",
+  measurementId:"G-NWZ5K0Q2EF"
+};
+let CLOUD_ON=false, fbDb=null;
+function firebaseInit(){
+  try{
+    if(typeof firebase==='undefined') return;
+    if(!FIREBASE_CONFIG.apiKey || FIREBASE_CONFIG.apiKey.indexOf('PASTE')===0) return;
+    firebase.initializeApp(FIREBASE_CONFIG); fbDb=firebase.firestore(); CLOUD_ON=true;
+  }catch(e){ console.warn('cloud off',e); CLOUD_ON=false; }
+}
+function cloudSave(){
+  if(!CLOUD_ON||!CURRENT||CURRENT.role==='parent') return;
+  fbDb.collection('progress').doc(CURRENT.user).set({name:CURRENT.name,prog:DB.prog,updated:Date.now()}).catch(e=>console.warn(e));
+}
+async function cloudLoad(user){
+  if(!CLOUD_ON) return null;
+  try{ const d=await fbDb.collection('progress').doc(user).get(); return d.exists?d.data():null; }
+  catch(e){ console.warn(e); return null; }
+}
+const STORE_PREFIX='sheekho-gujarati-full:';
+let CURRENT=null, DB={prog:{}}, currentModule=null;
+function storeKey(){ return STORE_PREFIX+(CURRENT?CURRENT.user:'guest'); }
+function loadDB(){ DB={prog:{}}; try{const r=localStorage.getItem(storeKey()); if(r)DB=JSON.parse(r);}catch(e){} if(!DB.prog)DB.prog={}; }
+function saveDB(){ if(!CURRENT)return; try{localStorage.setItem(storeKey(),JSON.stringify(DB));}catch(e){} cloudSave(); }
+function prog(){ return DB.prog; }
+
+/* =========================================================
+   3) COURSE CONTENT
+   ========================================================= */
+function mk(g,r,m){return {g:g,r:r,m:m};}
+
+const VOWELS=[
+  mk('અ','a','as in "about"'),mk('આ','ā','as in "father"'),mk('ઇ','i','as in "sit"'),
+  mk('ઈ','ī','as in "see"'),mk('ઉ','u','as in "put"'),mk('ઊ','ū','as in "moon"'),
+  mk('એ','e','as in "they"'),mk('ઐ','ai','as in "eye"'),mk('ઓ','o','as in "go"'),
+  mk('ઔ','au','as in "caught"'),mk('અં','aṃ','nasal "an/am"'),mk('ઋ','ṛu','rolled "ru"'),
+];
+const CONS=[
+  mk('ક','ka','kite'),mk('ખ','kha','breathy k'),mk('ગ','ga','go'),mk('ઘ','gha','breathy g'),mk('ઙ','ṅa','sing'),
+  mk('ચ','cha','chair'),mk('છ','chha','breathy ch'),mk('જ','ja','jug'),mk('ઝ','jha','breathy j'),mk('ઞ','ña','ny'),
+  mk('ટ','ṭa','curled t'),mk('ઠ','ṭha','breathy ṭ'),mk('ડ','ḍa','curled d'),mk('ઢ','ḍha','breathy ḍ'),mk('ણ','ṇa','curled n'),
+  mk('ત','ta','soft t'),mk('થ','tha','breathy t'),mk('દ','da','soft d'),mk('ધ','dha','breathy d'),mk('ન','na','net'),
+  mk('પ','pa','spin'),mk('ફ','pha','f'),mk('બ','ba','bat'),mk('ભ','bha','breathy b'),mk('મ','ma','map'),
+  mk('ય','ya','yes'),mk('ર','ra','rolled r'),mk('લ','la','lamp'),mk('વ','va','v/w'),
+  mk('શ','sha','ship'),mk('ષ','ṣa','curled sh'),mk('સ','sa','sun'),mk('હ','ha','hat'),mk('ળ','ḷa','curled l'),
+];
+
+/* barakhadi: base consonants (glyph + stem-roman) */
+const BCONS=[['ક','k'],['ખ','kh'],['ગ','g'],['ઘ','gh'],['ચ','ch'],['છ','chh'],['જ','j'],['ઝ','jh'],
+['ટ','ṭ'],['ઠ','ṭh'],['ડ','ḍ'],['ઢ','ḍh'],['ણ','ṇ'],['ત','t'],['થ','th'],['દ','d'],['ધ','dh'],['ન','n'],
+['પ','p'],['ફ','ph'],['બ','b'],['ભ','bh'],['મ','m'],['ય','y'],['ર','r'],['લ','l'],['વ','v'],
+['શ','sh'],['ષ','ṣ'],['સ','s'],['હ','h'],['ળ','ḷ']];
+const BARA=[['','a'],['ા','ā'],['િ','i'],['ી','ī'],['ુ','u'],['ૂ','ū'],['ે','e'],['ૈ','ai'],['ો','o'],['ૌ','au'],['ં','aṃ'],['ઃ','aḥ']];
+function baraRow(idx){ const [c,stem]=BCONS[idx]; return BARA.map(([s,v])=>mk(c+s, stem+v, '')); }
+
+/* numbers 1-99 (Gujarati words + roman) */
+const NUM=['','એક','બે','ત્રણ','ચાર','પાંચ','છ','સાત','આઠ','નવ','દસ','અગિયાર','બાર','તેર','ચૌદ','પંદર','સોળ','સત્તર','અઢાર','ઓગણીસ','વીસ','એકવીસ','બાવીસ','ત્રેવીસ','ચોવીસ','પચ્ચીસ','છવ્વીસ','સત્તાવીસ','અઠ્ઠાવીસ','ઓગણત્રીસ','ત્રીસ','એકત્રીસ','બત્રીસ','તેત્રીસ','ચોત્રીસ','પાંત્રીસ','છત્રીસ','સડત્રીસ','અડત્રીસ','ઓગણચાળીસ','ચાળીસ','એકતાળીસ','બેતાળીસ','ત્રેતાળીસ','ચુંમાળીસ','પિસ્તાળીસ','છેતાળીસ','સુડતાળીસ','અડતાળીસ','ઓગણપચાસ','પચાસ','એકાવન','બાવન','ત્રેપન','ચોપન','પંચાવન','છપ્પન','સત્તાવન','અઠ્ઠાવન','ઓગણસાઠ','સાઠ','એકસઠ','બાસઠ','ત્રેસઠ','ચોસઠ','પાંસઠ','છાસઠ','સડસઠ','અડસઠ','અગણોસિત્તેર','સિત્તેર','એકોતેર','બોતેર','તોતેર','ચુમોતેર','પંચોતેર','છોતેર','સિત્યોતેર','અઠ્યોતેર','ઓગણ્યાએંસી','એંસી','એક્યાસી','બ્યાસી','ત્યાસી','ચોર્યાસી','પંચ્યાસી','છ્યાસી','સિત્યાસી','અઠ્યાસી','નેવ્યાસી','નેવું','એકાણું','બાણું','ત્રાણું','ચોરાણું','પંચાણું','છન્નું','સત્તાણું','અઠ્ઠાણું','નવ્વાણું'];
+const NUMR=['','ek','be','traṇ','chār','pānch','chha','sāt','āṭh','nav','das','agiyār','bār','ter','chaud','pandar','soḷ','sattar','aḍhār','ogaṇīs','vīs','ekvīs','bāvīs','trevīs','chovīs','pachchīs','chhavvīs','sattāvīs','aṭhṭhāvīs','ogaṇtrīs','trīs','ektrīs','batrīs','tetrīs','chotrīs','pāntrīs','chhatrīs','saḍtrīs','aḍtrīs','ogaṇchāḷīs','chāḷīs','ektāḷīs','betāḷīs','tretāḷīs','chummāḷīs','pistāḷīs','chhetāḷīs','suḍtāḷīs','aḍtāḷīs','ogaṇpachās','pachās','ekāvan','bāvan','trepan','chopan','panchāvan','chhappan','sattāvan','aṭhṭhāvan','ogaṇsāṭh','sāṭh','eksaṭh','bāsaṭh','tresaṭh','chosaṭh','pānsaṭh','chhāsaṭh','saḍsaṭh','aḍsaṭh','agaṇositter','sitter','ekoter','boter','toter','chumoter','panchoter','chhoter','sityoter','aṭhyoter','ogaṇyāensī','ensī','ekyāsī','byāsī','tyāsī','choryāsī','panchyāsī','chhyāsī','sityāsī','aṭhyāsī','nevyāsī','nevũ','ekāṇũ','bāṇũ','trāṇũ','chorāṇũ','panchāṇũ','chhannũ','sattāṇũ','aṭhṭhāṇũ','navvāṇũ'];
+const HPRE=['','એકસો','બસો','ત્રણસો','ચારસો','પાંચસો','છસો','સાતસો','આઠસો','નવસો'];
+const HPRER=['','ekso','baso','traṇso','chārso','pānchso','chhaso','sātso','āṭhso','navso'];
+const GDIG=['૦','૧','૨','૩','૪','૫','૬','૭','૮','૯'];
+function gujNum(n){ return String(n).split('').map(d=>GDIG[+d]).join(''); }
+function numWord(n){
+  if(n<100) return NUM[n];
+  if(n<1000){ const h=Math.floor(n/100), r=n%100;
+    const base = (n===100)?'સો':HPRE[h];
+    return r===0? base : base+' '+NUM[r]; }
+  if(n===1000) return 'હજાર';
+  return gujNum(n);
+}
+function numRom(n){
+  if(n<100) return NUMR[n];
+  if(n<1000){ const h=Math.floor(n/100), r=n%100;
+    const base=(n===100)?'so':HPRER[h];
+    return r===0? base : base+' '+NUMR[r]; }
+  if(n===1000) return 'hajār';
+  return String(n);
+}
+
+/* vocabulary datasets */
+const V_COLORS=[mk('લાલ','lāl','red'),mk('વાદળી','vādḷī','blue'),mk('પીળો','pīḷo','yellow'),mk('લીલો','līlo','green'),mk('કાળો','kāḷo','black'),mk('સફેદ','safed','white'),mk('નારંગી','nāraṅgī','orange'),mk('ગુલાબી','gulābī','pink'),mk('જાંબલી','jāmblī','purple'),mk('કથ્થાઈ','kaththāī','brown'),mk('ભૂખરો','bhūkhro','grey')];
+const V_CAL=[mk('રવિવાર','ravivār','Sunday'),mk('સોમવાર','somvār','Monday'),mk('મંગળવાર','maṅgaḷvār','Tuesday'),mk('બુધવાર','budhvār','Wednesday'),mk('ગુરુવાર','guruvār','Thursday'),mk('શુક્રવાર','shukravār','Friday'),mk('શનિવાર','shanivār','Saturday'),mk('ઉનાળો','unāḷo','summer'),mk('ચોમાસું','chomāsũ','monsoon'),mk('શિયાળો','shiyāḷo','winter'),mk('વસંત','vasant','spring'),mk('પાનખર','pānkhar','autumn')];
+const V_BODY=[mk('માથું','māthũ','head'),mk('વાળ','vāḷ','hair'),mk('આંખ','āṅkh','eye'),mk('કાન','kān','ear'),mk('નાક','nāk','nose'),mk('મોઢું','moḍhũ','mouth'),mk('દાંત','dānt','tooth'),mk('જીભ','jībh','tongue'),mk('ગળું','gaḷũ','throat'),mk('હાથ','hāth','hand'),mk('આંગળી','āṅgḷī','finger'),mk('પગ','pag','leg/foot'),mk('પેટ','peṭ','stomach'),mk('ખભો','khabho','shoulder')];
+const V_FAMILY=[mk('મા','mā','mother'),mk('પિતા','pitā','father'),mk('ભાઈ','bhāī','brother'),mk('બહેન','bahen','sister'),mk('દાદા','dādā','grandfather (p)'),mk('દાદી','dādī','grandmother (p)'),mk('નાના','nānā','grandfather (m)'),mk('નાની','nānī','grandmother (m)'),mk('કાકા','kākā','uncle (p)'),mk('મામા','māmā','uncle (m)'),mk('માસી','māsī','aunt (m)'),mk('ફોઈ','phoī','aunt (p)'),mk('દીકરો','dīkro','son'),mk('દીકરી','dīkrī','daughter')];
+const V_ANIMALS=[mk('કૂતરો','kūtro','dog'),mk('બિલાડી','bilāḍī','cat'),mk('ગાય','gāy','cow'),mk('ભેંસ','bhẽs','buffalo'),mk('બકરી','bakrī','goat'),mk('ઘોડો','ghoḍo','horse'),mk('હાથી','hāthī','elephant'),mk('સિંહ','sinh','lion'),mk('વાઘ','vāgh','tiger'),mk('વાંદરો','vāndro','monkey'),mk('સસલું','saslũ','rabbit'),mk('ઊંટ','ũṭ','camel'),mk('કાગડો','kāgḍo','crow'),mk('ચકલી','chakli','sparrow'),mk('પોપટ','popaṭ','parrot'),mk('મોર','mor','peacock')];
+const V_FRUITVEG=[mk('કેરી','kerī','mango'),mk('કેળું','keḷũ','banana'),mk('સફરજન','safarjan','apple'),mk('દ્રાક્ષ','drāksh','grapes'),mk('દાડમ','dāḍam','pomegranate'),mk('તરબૂચ','tarbūch','watermelon'),mk('બટાકા','baṭākā','potato'),mk('ટમેટા','ṭameṭā','tomato'),mk('ડુંગળી','ḍuṅgḷī','onion'),mk('રીંગણ','rīṅgaṇ','brinjal'),mk('ગાજર','gājar','carrot'),mk('મરચું','marchũ','chili'),mk('લસણ','lasaṇ','garlic'),mk('વટાણા','vaṭāṇā','peas')];
+const V_NATURE=[mk('સૂરજ','sūraj','sun'),mk('ચંદ્ર','chandra','moon'),mk('તારો','tāro','star'),mk('આકાશ','ākāsh','sky'),mk('વાદળ','vādaḷ','cloud'),mk('વરસાદ','varsād','rain'),mk('પવન','pavan','wind'),mk('નદી','nadī','river'),mk('પર્વત','parvat','mountain'),mk('ઝાડ','jhāḍ','tree'),mk('ફૂલ','phūl','flower'),mk('દરિયો','dariyo','sea'),mk('આગ','āg','fire'),mk('માટી','māṭī','soil')];
+const V_AROUND=[mk('ઘર','ghar','house'),mk('ઓરડો','orḍo','room'),mk('રસોડું','rasoḍũ','kitchen'),mk('બારણું','bārṇũ','door'),mk('બારી','bārī','window'),mk('ખુરશી','khurshī','chair'),mk('પલંગ','palaṅg','bed'),mk('શાળા','shāḷā','school'),mk('પુસ્તક','pustak','book'),mk('પેન','pen','pen'),mk('શિક્ષક','shikshak','teacher'),mk('વિદ્યાર્થી','vidyārthī','student'),mk('દફતર','daftar','schoolbag')];
+const V_FOOD=[mk('રોટલી','roṭlī','flatbread'),mk('ભાત','bhāt','rice'),mk('દાળ','dāḷ','lentils'),mk('શાક','shāk','vegetable dish'),mk('દૂધ','dūdh','milk'),mk('પાણી','pāṇī','water'),mk('ચા','chā','tea'),mk('દહીં','dahīṃ','yogurt'),mk('ઘી','ghī','ghee'),mk('ખાંડ','khānd','sugar'),mk('મીઠું','mīṭhũ','salt'),mk('તેલ','tel','oil')];
+const V_SIMPLE=[mk('મા','mā','mother'),mk('ઘર','ghar','house'),mk('ગાય','gāy','cow'),mk('નદી','nadī','river'),mk('પાણી','pāṇī','water'),mk('કમળ','kamaḷ','lotus'),mk('ફૂલ','phūl','flower'),mk('હાથી','hāthī','elephant'),mk('સૂરજ','sūraj','sun'),mk('ભાઈ','bhāī','brother')];
+
+/* speaking */
+const SPK_GREET=[mk('નમસ્તે','namaste','hello'),mk('કેમ છો?','kem chho?','how are you?'),mk('મજામાં','majāmā',"I'm well"),mk('આભાર','ābhār','thank you'),mk('માફ કરજો','māf karjo','sorry'),mk('આવજો','āvjo','goodbye'),mk('હા','hā','yes'),mk('ના','nā','no'),mk('મહેરબાની કરીને','meherbānī karīne','please'),mk('તમારું નામ શું છે?','tamārũ nām shũ chhe?',"what's your name?"),mk('મારું નામ ... છે','mārũ nām ... chhe','my name is ...'),mk('તમે ક્યાંથી છો?','tame kyānthī chho?','where are you from?')];
+const SPK_DAILY=[mk('મને ભૂખ લાગી છે','mane bhūkh lāgī chhe',"I'm hungry"),mk('મને તરસ લાગી છે','mane taras lāgī chhe',"I'm thirsty"),mk('આ શું છે?','ā shũ chhe?','what is this?'),mk('કેટલા વાગ્યા?','keṭlā vāgyā?','what time is it?'),mk('મને સમજાયું નહીં','mane samjāyũ nahī',"I didn't understand"),mk('ફરીથી કહો','pharīthī kaho','say it again'),mk('ચાલો જઈએ','chālo jaīe',"let's go"),mk('મને ગમે છે','mane game chhe','I like it'),mk('કેટલા રૂપિયા?','keṭlā rūpiyā?','how much (money)?'),mk('મદદ કરો','madad karo','please help')];
+
+/* grammar lessons */
+const GRAMMAR={
+  noun:{title:'સંજ્ઞા — Nouns',intro:'A સંજ્ઞા (noun) is a naming word — a person, place, thing, or feeling.',head:['શબ્દ · Word','પ્રકાર · Type','Meaning'],rows:[['રમેશ','વ્યક્તિ (person)','a name'],['અમદાવાદ','સ્થળ (place)','Ahmedabad'],['પુસ્તક','વસ્તુ (thing)','book'],['પ્રેમ','ભાવ (feeling)','love'],['નદી','વસ્તુ (thing)','river']],note:'Anything you can point to or name is a સંજ્ઞા.'},
+  pron:{title:'સર્વનામ — Pronouns',intro:'A સર્વનામ replaces a noun so you don\'t repeat it.',head:['ગુજરાતી','રોમન','English'],rows:[['હું','hũ','I'],['તું','tũ','you (informal)'],['તમે','tame','you (formal/plural)'],['તે / એ','te / e','he / she / it'],['આ','ā','this'],['અમે','ame','we'],['આપણે','āpaṇe','we (incl. you)'],['તેઓ','teo','they']],note:'તું is casual (friends, kids); તમે is respectful.'},
+  gender:{title:'જાતિ — Gender',intro:'Gujarati words have three genders. The ending often gives a clue.',head:['જાતિ','ending','Example'],rows:[['પુલ્લિંગ (masculine)','often -ો','છોકરો (boy), ઘોડો (horse)'],['સ્ત્રીલિંગ (feminine)','often -ી','છોકરી (girl), ઘોડી (mare)'],['નપુંસકલિંગ (neuter)','often -ું','છોકરું (child), ફૂલ (flower)']],note:'The gender changes the endings of adjectives and verbs too.'},
+  number:{title:'વચન — Singular & Plural',intro:'એકવચન = one; બહુવચન = many. Most words add -ઓ for plural.',head:['એકવચન','બહુવચન','Meaning'],rows:[['છોકરો','છોકરાઓ','boy → boys'],['છોકરી','છોકરીઓ','girl → girls'],['પુસ્તક','પુસ્તકો','book → books'],['ઝાડ','ઝાડો','tree → trees']],note:'Some words change more than just the ending — those come with practice.'},
+  adj:{title:'વિશેષણ — Adjectives',intro:'A વિશેષણ describes a noun. It changes ending to match the noun\'s gender: -ો / -ી / -ું.',head:['ગુજરાતી','રોમન','English'],rows:[['મોટો','moṭo','big'],['નાનો','nāno','small'],['સારો','sāro','good'],['ખરાબ','kharāb','bad'],['ઊંચો','ũcho','tall'],['લાંબો','lāmbo','long'],['નવો','navo','new'],['જૂનો','jūno','old']],note:'સારો છોકરો (good boy), સારી છોકરી (good girl), સારું બાળક (good child).'},
+  verb:{title:'ક્રિયાપદ — Verbs',intro:'A ક્રિયાપદ is an action word. The dictionary form ends in -વું.',head:['ગુજરાતી','રોમન','English'],rows:[['જવું','javũ','to go'],['આવવું','āvvũ','to come'],['ખાવું','khāvũ','to eat'],['પીવું','pīvũ','to drink'],['બોલવું','bolvũ','to speak'],['વાંચવું','vānchvũ','to read'],['લખવું','lakhvũ','to write'],['રમવું','ramvũ','to play'],['જોવું','jovũ','to see'],['કરવું','karvũ','to do']],note:'Drop -વું and add endings to make sentences.'},
+  tense:{title:'કાળ — Tenses',intro:'Three tenses. Example with ખાવું (to eat), "I":',head:['કાળ · Tense','ગુજરાતી','English'],rows:[['વર્તમાન (present)','હું ખાઉં છું','I eat / am eating'],['ભૂત (past)','મેં ખાધું','I ate'],['ભવિષ્ય (future)','હું ખાઈશ','I will eat']],note:'Forms shift a little with gender and person — but this is the core idea.'},
+  anto:{title:'વિરુદ્ધાર્થી — Opposites',intro:'Words with opposite meanings (antonyms).',head:['શબ્દ','વિરુદ્ધ','Meaning'],rows:[['મોટું','નાનું','big ↔ small'],['દિવસ','રાત','day ↔ night'],['સાચું','ખોટું','true ↔ false'],['ઊંચું','નીચું','high ↔ low'],['ગરમ','ઠંડું','hot ↔ cold'],['નવું','જૂનું','new ↔ old'],['સુખ','દુઃખ','joy ↔ sorrow'],['જીત','હાર','win ↔ loss']],note:''},
+  syno:{title:'સમાનાર્થી — Synonyms',intro:'Different words with the same meaning.',head:['Meaning','Words'],rows:[['water','પાણી = જળ = નીર'],['house','ઘર = મકાન = નિવાસ'],['sun','સૂરજ = સૂર્ય = રવિ'],['sky','આકાશ = ગગન = નભ'],['night','રાત = રાત્રિ = નિશા'],['flower','ફૂલ = પુષ્પ = કુસુમ']],note:'Poets often use the rarer synonyms.'},
+  ques:{title:'પ્રશ્નાર્થ — Question Words',intro:'Words that ask questions.',head:['ગુજરાતી','રોમન','English'],rows:[['શું','shũ','what'],['કોણ','koṇ','who'],['ક્યાં','kyāṃ','where'],['ક્યારે','kyāre','when'],['કેમ','kem','why'],['કેવી રીતે','kevī rīte','how'],['કેટલું','keṭlũ','how much'],['કયું','kayũ','which'],['કોનું','konũ','whose']],note:''},
+  prov:{title:'કહેવત — Proverbs',intro:'Common Gujarati sayings and what they mean.',head:['કહેવત','Meaning'],rows:[['બોલે તેના બોર વેચાય','Speak up — those who ask, get.'],['અધૂરો ઘડો છલકાય ઘણો','A half-full pot spills most — the less you know, the more you boast.'],['જ્યાં સુધી શ્વાસ ત્યાં સુધી આશ','While there is breath, there is hope.'],['વાવો તેવું લણો','You reap what you sow.']],note:''},
+  idiom:{title:'રૂઢિપ્રયોગ — Idioms',intro:'Phrases whose meaning isn\'t literal.',head:['રૂઢિપ્રયોગ','Meaning'],rows:[['આંખ મીંચામણાં કરવાં','to turn a blind eye'],['હાથ ધોઈ નાખવા','to give up on something'],['નાકે દમ આવવો','to be fed up'],['પેટમાં પાણી ન હાલવું','to stay completely calm']],note:''},
+};
+const CONCEPT={
+  intro:{title:'How Gujarati works',html:'<h4>1 · It sounds out</h4><p>Unlike English, Gujarati letters almost always make the same sound. Learn a letter once and you can read it anywhere. You read left to right.</p><h4>2 · Every consonant hides an "a"</h4><p>The letter <span class="ex">ક</span> is not just "k" — it is <b>"ka"</b>. That built-in "a" is there unless a vowel sign changes it.</p><h4>3 · No top line, no capitals</h4><p>Gujarati has no line across the top (Hindi does), and no capital vs small letters. One shape per sound.</p>'},
+  spelling:{title:'જોડણી — Spelling & sentences',html:'<h4>Word order</h4><p>Gujarati usually puts the verb <b>last</b>: <span class="ex">હું પાણી પીઉં છું</span> = "I water drink" (I drink water).</p><h4>Two i and two u</h4><p>ઇ/ઈ (short/long i) and ઉ/ઊ (short/long u) change meaning — spelling them right matters. Read slowly and notice the length.</p><h4>The dot (અનુસ્વાર)</h4><p>The dot <span class="ex">ં</span> adds a nasal sound: <span class="ex">રંગ</span> (rang, colour), <span class="ex">બંને</span> (banne, both).</p>'},
+  review:{title:'Where to go next',html:'<h4>You have covered a lot</h4><p>Script, બારાખડી, numbers to a thousand, hundreds of words, core grammar, and everyday speaking. That is a real foundation.</p><h4>Keep it alive</h4><p>The fastest way to lock it in: read Gujarati signs and labels aloud, write a few words a day, and try one new spoken phrase at dinner. Small daily practice beats long rare sessions.</p><h4>Ask for more</h4><p>Tell your parent which grade you want to go deeper on — more words, more grammar, or reading practice — and it can be added.</p>'},
+};
+
+const DATASETS={vowels:VOWELS,cons:CONS,colors:V_COLORS,cal:V_CAL,body:V_BODY,family:V_FAMILY,animals:V_ANIMALS,fruitveg:V_FRUITVEG,nature:V_NATURE,around:V_AROUND,food:V_FOOD,simple:V_SIMPLE,greet:SPK_GREET,daily:SPK_DAILY};
+
+/* =========================================================
+   4) MODULE MAP  (ધોરણ 1 – 10)
+   ========================================================= */
+const STD_TITLES={1:'Foundations',2:'Building blocks',3:'Everyday words',4:'The world around us',5:'More words & grammar',6:'Grammar basics',7:'Verbs, tenses & talking',8:'Word skills',9:'Speaking & sayings',10:'Putting it together'};
+const MODULES=[
+  {id:'intro',std:1,type:'concept',ck:'intro',title:'How Gujarati works',sub:'ધોરણ 1',glyph:'ગુજરાતી',intro:'Three ideas that make the whole script click.'},
+  {id:'vowels',std:1,type:'letters',ds:'vowels',title:'Vowels · સ્વર',sub:'ધોરણ 1',glyph:'અ આ ઇ',intro:'The 12 vowel sounds — the start of everything.'},
+  {id:'cons',std:1,type:'letters',ds:'cons',title:'Consonants · કક્કો',sub:'ધોરણ 1',glyph:'ક ખ ગ',intro:'All 34 consonants. Each carries a built-in "a".',note:'Breathy letters (ખ ઘ છ ઝ …) add a puff of air. The curled letters (ટ ઠ ડ …) are said with the tongue rolled back.'},
+  {id:'bara',std:2,type:'barakhadi',title:'બારાખડી — the matrix',sub:'ધોરણ 2',glyph:'કા કિ કુ',intro:'Every consonant × every vowel sign. This is how Gujarati children learn to read. Pick a letter to see all its forms.',note:'Master a few rows and you can read almost any word — the pattern repeats for all 34 consonants.'},
+  {id:'numbers',std:2,type:'numbers',title:'Numbers · આંક',sub:'ધોરણ 2',glyph:'૧ ૨ ૩',intro:'Gujarati digits and number-words, from 1 all the way to 1,000. Use the range buttons to go further.',note:'After 100 the pattern is regular: એકસો (100) + the 1–99 word. 1,000 = હજાર, 1,00,000 = લાખ, 1,00,00,000 = કરોડ.'},
+  {id:'simple',std:2,type:'vocab',ds:'simple',title:'First words',sub:'ધોરણ 2',glyph:'મા ઘર',intro:'Short, easy words to read now that you know the letters.'},
+  {id:'colors',std:3,type:'vocab',ds:'colors',title:'Colours · રંગ',sub:'ધોરણ 3',glyph:'લાલ',intro:'Name every colour in Gujarati.'},
+  {id:'cal',std:3,type:'vocab',ds:'cal',title:'Days & seasons',sub:'ધોરણ 3',glyph:'સોમવાર',intro:'The week and the seasons.'},
+  {id:'body',std:3,type:'vocab',ds:'body',title:'The body · શરીર',sub:'ધોરણ 3',glyph:'આંખ કાન',intro:'Parts of the body.'},
+  {id:'family',std:4,type:'vocab',ds:'family',title:'Family · કુટુંબ',sub:'ધોરણ 4',glyph:'મા ભાઈ',intro:'The people at home — with the exact Gujarati relationship words.'},
+  {id:'animals',std:4,type:'vocab',ds:'animals',title:'Animals & birds',sub:'ધોરણ 4',glyph:'ગાય મોર',intro:'Common animals and birds.'},
+  {id:'g_noun',std:4,type:'grammar',gk:'noun',title:'Nouns · સંજ્ઞા',sub:'ધોરણ 4',glyph:'સંજ્ઞા',intro:'Naming words — the first piece of grammar.'},
+  {id:'fruitveg',std:5,type:'vocab',ds:'fruitveg',title:'Fruits & vegetables',sub:'ધોરણ 5',glyph:'કેરી',intro:'Food from the market.'},
+  {id:'nature',std:5,type:'vocab',ds:'nature',title:'Nature · કુદરત',sub:'ધોરણ 5',glyph:'સૂરજ',intro:'Sun, moon, rivers and more.'},
+  {id:'g_pron',std:5,type:'grammar',gk:'pron',title:'Pronouns · સર્વનામ',sub:'ધોરણ 5',glyph:'હું તું',intro:'I, you, he, she, we, they.'},
+  {id:'around',std:6,type:'vocab',ds:'around',title:'Home & school',sub:'ધોરણ 6',glyph:'ઘર શાળા',intro:'Words for the places you spend your day.'},
+  {id:'g_gender',std:6,type:'grammar',gk:'gender',title:'Gender · જાતિ',sub:'ધોરણ 6',glyph:'-ો -ી -ું',intro:'How Gujarati words are masculine, feminine or neuter.'},
+  {id:'g_number',std:6,type:'grammar',gk:'number',title:'Plurals · વચન',sub:'ધોરણ 6',glyph:'એક-બહુ',intro:'Making words singular and plural.'},
+  {id:'g_adj',std:7,type:'grammar',gk:'adj',title:'Adjectives · વિશેષણ',sub:'ધોરણ 7',glyph:'મોટો',intro:'Describing words.'},
+  {id:'g_verb',std:7,type:'grammar',gk:'verb',title:'Verbs · ક્રિયાપદ',sub:'ધોરણ 7',glyph:'ખાવું',intro:'Action words and their -વું form.'},
+  {id:'g_tense',std:7,type:'grammar',gk:'tense',title:'Tenses · કાળ',sub:'ધોરણ 7',glyph:'કાળ',intro:'Past, present and future.'},
+  {id:'g_anto',std:8,type:'grammar',gk:'anto',title:'Opposites · વિરુદ્ધાર્થી',sub:'ધોરણ 8',glyph:'મોટું↔નાનું',intro:'Antonym pairs.'},
+  {id:'g_syno',std:8,type:'grammar',gk:'syno',title:'Synonyms · સમાનાર્થી',sub:'ધોરણ 8',glyph:'પાણી=જળ',intro:'Words that mean the same.'},
+  {id:'g_ques',std:8,type:'grammar',gk:'ques',title:'Question words',sub:'ધોરણ 8',glyph:'શું કોણ',intro:'How to ask what, who, where, when.'},
+  {id:'spk_greet',std:9,type:'vocab',ds:'greet',title:'Greetings & intro',sub:'ધોરણ 9',glyph:'કેમ છો?',intro:'Real phrases to start a conversation. Tap "Say it" to hear each one.'},
+  {id:'spk_daily',std:9,type:'vocab',ds:'daily',title:'Everyday phrases',sub:'ધોરણ 9',glyph:'ચાલો',intro:'Useful sentences for daily life.'},
+  {id:'g_prov',std:9,type:'grammar',gk:'prov',title:'Proverbs · કહેવત',sub:'ધોરણ 9',glyph:'કહેવત',intro:'Wisdom in a line.'},
+  {id:'g_idiom',std:10,type:'grammar',gk:'idiom',title:'Idioms · રૂઢિપ્રયોગ',sub:'ધોરણ 10',glyph:'રૂઢિ',intro:'Colourful expressions.'},
+  {id:'spelling',std:10,type:'concept',ck:'spelling',title:'Spelling & sentences',sub:'ધોરણ 10',glyph:'જોડણી',intro:'Putting words into correct sentences.'},
+  {id:'review',std:10,type:'concept',ck:'review',title:'Where to go next',sub:'ધોરણ 10',glyph:'✓',intro:'A recap and how to keep improving.'},
+];
+function moduleData(m){ return m.ds ? DATASETS[m.ds] : []; }
+function moduleItemCount(m){
+  if(m.type==='letters'||m.type==='vocab') return moduleData(m).length;
+  if(m.type==='barakhadi') return BCONS.length;
+  return 1;
+}
+
+/* =========================================================
+   5) HOME (graded ધોરણ 1–10)
+   ========================================================= */
+function modProgress(m){
+  const p=prog()[m.id]||{};
+  const total=moduleItemCount(m);
+  if(m.type==='concept'||m.type==='grammar') return p.done?100:0;
+  const seen=p.seen?Object.keys(p.seen).length:0;
+  let pct=Math.round(100*Math.min(seen,total)/total);
+  if(p.done) pct=100;
+  return pct;
+}
+function renderHome(){
+  const learner=CURRENT&&CURRENT.role==='learner';
+  let totalPct=0;
+  MODULES.forEach(m=>totalPct+=modProgress(m));
+  totalPct=Math.round(totalPct/MODULES.length);
+  let h=`<div class="hero"><div class="big">ગ</div>
+    <h1>શીખો <em>ગુજરાતી</em>${learner?', '+CURRENT.name:''}</h1>
+    <p>The full course — ધોરણ 1 to ધોરણ 10. Script, બારાખડી, numbers to 1,000, hundreds of words, grammar and real speaking. Work down the grades in order.</p>
+    <div class="meta">
+      <span class="chip"><b>${MODULES.length}</b> lessons</span>
+      <span class="chip"><b>10</b> ધોરણ · grades</span>
+      ${learner?`<span class="chip">Your progress: <b>${totalPct}%</b></span>`:''}
+      <span class="chip">${CLOUD_ON?'☁️ Progress syncs online':'Progress saves on this device'}</span>
+    </div></div>`;
+  for(let s=1;s<=10;s++){
+    const mods=MODULES.filter(m=>m.std===s);
+    if(!mods.length) continue;
+    h+=`<div class="std-block"><div class="std-head"><span class="n">ધોરણ ${s}</span><h2>${STD_TITLES[s]}</h2><span class="rule"></span></div><div class="modules">`;
+    mods.forEach(m=>{
+      const pct=modProgress(m);
+      h+=`<button class="mod${pct===100?' complete':''}" onclick="openModule('${m.id}')">
+        <span class="done-badge">✓</span>
+        <div class="tag">${m.sub}</div>
+        <div class="glyphset">${m.glyph}</div>
+        <h3>${m.title}</h3><p>${m.intro}</p>
+        <div class="foot"><div class="pbar"><i style="width:${pct}%"></i></div><span class="pct">${pct}%</span></div>
+      </button>`;
+    });
+    h+=`</div></div>`;
+  }
+  h+=`<p class="footer-note">Sheekho Gujarati · made with love for Suhagi &amp; Suhana</p>`;
+  document.getElementById('home').innerHTML=h;
+}
+function goHome(){
+  document.getElementById('lesson').classList.remove('active');
+  if(CURRENT&&CURRENT.role==='parent'){
+    document.getElementById('home').style.display='none';
+    document.getElementById('parentDash').style.display='block';
+    renderParentDashboard();
+  }else{
+    document.getElementById('parentDash').style.display='none';
+    document.getElementById('home').style.display='block';
+    renderHome();
+  }
+  window.scrollTo({top:0});
+}
+
+/* =========================================================
+   6) LESSON VIEW
+   ========================================================= */
+let activePane='learn', baraSel=0, numLo=1, numHi=20;
+function openModule(id){
+  if(!CURRENT){ showLogin(); return; }
+  const m=MODULES.find(x=>x.id===id); if(!m) return;
+  currentModule=m;
+  const p=prog(); if(!p[m.id]) p[m.id]={seen:{}};
+  document.getElementById('home').style.display='none';
+  document.getElementById('parentDash').style.display='none';
+  document.getElementById('lesson').classList.add('active');
+  document.getElementById('lSub').textContent=m.sub+' · '+(STD_TITLES[m.std]||'');
+  document.getElementById('lTitle').textContent=m.title;
+  document.getElementById('lIntro').textContent=m.intro;
+  const note=document.getElementById('lNote');
+  if(m.note){ note.textContent=m.note; note.style.display='block'; } else note.style.display='none';
+  if(m.type==='concept'||m.type==='grammar'){ p[m.id].done=true; saveDB(); }
+  baraSel=0; numLo=1; numHi=20;
+  buildTabs(); showPane('learn');
+  window.scrollTo({top:0});
+}
+function buildTabs(){
+  const m=currentModule; const t=document.getElementById('lTabs');
+  const hasQuiz=(m.type==='letters'||m.type==='vocab');
+  const hasPrint=(m.type==='letters'||m.type==='vocab'||m.type==='barakhadi'||m.type==='numbers');
+  let h=`<button class="tab on" data-p="learn" onclick="showPane('learn')">Learn</button>`;
+  if(hasQuiz) h+=`<button class="tab" data-p="quiz" onclick="showPane('quiz')">Quiz</button>`;
+  if(hasPrint) h+=`<button class="tab" data-p="print" onclick="printSheet()">Print worksheet</button>`;
+  t.innerHTML=h;
+}
+function showPane(p){
+  activePane=p;
+  document.querySelectorAll('#lTabs .tab').forEach(b=>b.classList.toggle('on',b.dataset.p===p));
+  document.getElementById('paneLearn').style.display=p==='learn'?'block':'none';
+  document.getElementById('paneQuiz').style.display=p==='quiz'?'block':'none';
+  if(p==='learn') renderLearn();
+  if(p==='quiz') startQuiz();
+}
+function completeCTA(){
+  const m=currentModule, p=prog()[m.id]||{};
+  if(p.done) return `<div class="complete-cta"><p>✓ Lesson complete${p.quiz?` · best quiz ${p.quiz}%`:''}</p><button class="btn ghost" onclick="goHome()">Back to course</button></div>`;
+  return `<div class="complete-cta"><p>Finished going through this lesson?</p><button class="btn" onclick="markComplete()">Mark as complete ✓</button></div>`;
+}
+function markComplete(){
+  const p=prog(); if(!p[currentModule.id]) p[currentModule.id]={seen:{}};
+  p[currentModule.id].done=true; saveDB(); renderLearn();
+}
+function seeItem(i){
+  const p=prog(); const id=currentModule.id;
+  if(!p[id]) p[id]={seen:{}}; if(!p[id].seen) p[id].seen={};
+  p[id].seen[i]=1; saveDB();
+}
+function renderLearn(){
+  const m=currentModule, el=document.getElementById('paneLearn');
+  if(m.type==='letters'){
+    const data=moduleData(m), seen=(prog()[m.id]||{}).seen||{};
+    el.innerHTML=`<div class="lgrid">`+data.map((it,i)=>
+      `<button class="lcard" onclick="openDetail(${i})" style="${seen[i]?'border-color:var(--leaf)':''}">
+        <span class="g">${it.g}</span><span class="rom">${it.r}</span><span class="en">${it.m}</span></button>`).join('')+`</div>`+completeCTA();
+  }
+  else if(m.type==='vocab'){
+    const data=moduleData(m), seen=(prog()[m.id]||{}).seen||{};
+    el.innerHTML=`<div class="wordlist">`+data.map((it,i)=>
+      `<button class="word" onclick="openDetail(${i})" style="${seen[i]?'border-color:var(--leaf)':''}">
+        <div class="ww">${it.g}</div><div class="wr">${it.r}</div><div class="wm">${it.m}</div></button>`).join('')+`</div>`+completeCTA();
+  }
+  else if(m.type==='barakhadi'){ renderBara(el); }
+  else if(m.type==='numbers'){ renderNumbers(el); }
+  else if(m.type==='grammar'){
+    const g=GRAMMAR[m.gk];
+    let rows=g.rows.map(r=>`<tr>`+r.map((c,ci)=>`<td class="${/[\u0A80-\u0AFF]/.test(c)&&ci===0?'g':''}">${c}</td>`).join('')+`</tr>`).join('');
+    el.innerHTML=`<div class="lesson-body"><p>${g.intro}</p>
+      <table class="gtable"><thead><tr>${g.head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>
+      ${g.note?`<p style="margin-top:14px"><b>Note:</b> ${g.note}</p>`:''}</div>`+completeCTA();
+  }
+  else if(m.type==='concept'){
+    el.innerHTML=`<div class="lesson-body">${CONCEPT[m.ck].html}</div>`+completeCTA();
+  }
+}
+function renderBara(el){
+  const seen=(prog()[currentModule.id]||{}).seen||{};
+  let picker=`<div class="cons-picker">`+BCONS.map(([c],i)=>
+    `<button class="cbtn${i===baraSel?' on':''}${seen[i]?'':''}" style="${seen[i]&&i!==baraSel?'border-color:var(--leaf)':''}" onclick="selectCons(${i})">${c}</button>`).join('')+`</div>`;
+  const row=baraRow(baraSel);
+  let grid=`<div class="lgrid">`+row.map((it,i)=>
+    `<button class="lcard" onclick="speak('${it.g}')"><span class="g">${it.g}</span><span class="rom">${it.r}</span><span class="en">tap to hear</span></button>`).join('')+`</div>`;
+  el.innerHTML=picker+grid+`<p style="margin-top:14px;color:var(--ink-soft);font-size:14px">Viewed rows: <b>${Object.keys(seen).length} / ${BCONS.length}</b> — open every letter's row to finish this lesson.</p>`+completeCTA();
+}
+function selectCons(i){ baraSel=i; seeItem(i); renderBara(document.getElementById('paneLearn')); }
+const NUM_RANGES=[[1,20],[21,50],[51,100],[101,200],[201,300],[301,400],[401,500],[501,600],[601,700],[701,800],[801,900],[901,1000]];
+function renderNumbers(el){
+  let tabs=`<div class="range-tabs">`+NUM_RANGES.map(([lo,hi])=>
+    `<button class="rtab${lo===numLo?' on':''}" onclick="showRange(${lo},${hi})">${lo}–${hi}</button>`).join('')+`</div>`;
+  let cards=`<div class="lgrid">`;
+  for(let n=numLo;n<=numHi;n++){
+    cards+=`<button class="lcard" onclick="speak('${numWord(n)}')">
+      <span class="g">${gujNum(n)}</span><span class="rom" style="font-family:var(--guj);font-size:17px">${numWord(n)}</span><span class="en">${numRom(n)} · ${n}</span></button>`;
+  }
+  cards+=`</div>`;
+  el.innerHTML=tabs+cards+`<p style="margin-top:14px;color:var(--ink-soft);font-size:14px">Beyond 1,000: <span style="font-family:var(--guj)">હજાર</span> (thousand), <span style="font-family:var(--guj)">લાખ</span> (100,000), <span style="font-family:var(--guj)">કરોડ</span> (10,000,000). E.g. 2,500 = <span style="font-family:var(--guj)">બે હજાર પાંચસો</span>.</p>`+completeCTA();
+}
+function showRange(lo,hi){
+  numLo=lo; numHi=hi;
+  const idx=NUM_RANGES.findIndex(r=>r[0]===lo); seeItem(idx);
+  const p=prog()[currentModule.id];
+  if(p&&p.seen&&Object.keys(p.seen).length>=NUM_RANGES.length){ p.done=true; saveDB(); }
+  renderNumbers(document.getElementById('paneLearn'));
+}
+
+/* =========================================================
+   7) DETAIL + TRACE PAD
+   ========================================================= */
+function openDetail(i){
+  const m=currentModule, it=moduleData(m)[i]; if(!it) return;
+  seeItem(i);
+  const d=document.getElementById('detail');
+  d.innerHTML=`<button class="x" onclick="closeDetail()">✕</button>
+    <div class="detail-top"><div class="ghost">${it.g.charAt(0)}</div>
+      <div class="big" style="${it.g.length>6?'font-size:44px':''}">${it.g}</div>
+      <div class="rom">${it.r}</div>
+      <button class="speak" onclick="speak('${it.g.replace(/'/g,"\\'")}')">🔊 Say it</button></div>
+    <div class="detail-body">
+      ${it.m?`<div class="kv"><div class="k">Meaning / sound</div><div class="v"><span class="meaning">${it.m}</span></div></div>`:''}
+      <div class="trace-wrap"><h4>Trace it <button onclick="clearPad()">Clear</button></h4>
+      <canvas class="pad" id="pad"></canvas>
+      <p style="margin-top:8px;font-size:12.5px;color:var(--ink-soft)">Trace over the faint letter with your finger or a stylus.</p></div>
+    </div>`;
+  document.getElementById('scrim').classList.add('show');
+  requestAnimationFrame(()=>initPad(it.g));
+  if(m.type==='vocab'||m.type==='letters') renderLearn();
+}
+function closeDetail(){ document.getElementById('scrim').classList.remove('show'); }
+let padCtx=null, padGlyph='', drawing=false, padW=0, padH=0;
+function initPad(glyph){
+  const c=document.getElementById('pad'); if(!c) return;
+  padGlyph=glyph;
+  const w=(c.parentElement.clientWidth||300);
+  /* single letter → tall square; word → wide strip; sentence → wider strip */
+  const chars=[...glyph].length;
+  const ratio = chars<=2 ? 0.9 : chars<=8 ? 0.5 : 0.38;
+  const h=Math.max(150, Math.round(w*ratio));
+  const dpr=window.devicePixelRatio||1;
+  c.width=Math.round(w*dpr); c.height=Math.round(h*dpr);
+  c.style.width=w+'px'; c.style.height=h+'px';
+  padCtx=c.getContext('2d'); padCtx.setTransform(dpr,0,0,dpr,0,0);
+  padW=w; padH=h;
+  drawGuide();
+  /* redraw once the Gujarati font is actually loaded (fixes blank/box glyphs) */
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(padGlyph===glyph&&!drawing) drawGuide(); });
+  const pos=e=>{ const r=c.getBoundingClientRect(); return [e.clientX-r.left, e.clientY-r.top]; };
+  c.onpointerdown=e=>{ e.preventDefault(); drawing=true;
+    try{c.setPointerCapture(e.pointerId);}catch(_){}
+    const [x,y]=pos(e); padCtx.beginPath(); padCtx.moveTo(x,y); };
+  c.onpointermove=e=>{ if(!drawing) return; e.preventDefault();
+    const [x,y]=pos(e); padCtx.lineTo(x,y);
+    padCtx.strokeStyle='#23264a'; padCtx.lineWidth=Math.max(4,Math.round(w/72));
+    padCtx.lineCap='round'; padCtx.lineJoin='round'; padCtx.stroke(); };
+  c.onpointerup=()=>drawing=false; c.onpointercancel=()=>drawing=false;
+}
+function drawGuide(){
+  if(!padCtx) return;
+  padCtx.clearRect(0,0,padW,padH);
+  padCtx.save();
+  /* faint mid guide line */
+  padCtx.strokeStyle='rgba(35,38,74,.07)'; padCtx.lineWidth=1;
+  padCtx.beginPath(); padCtx.moveTo(12,padH/2); padCtx.lineTo(padW-12,padH/2); padCtx.stroke();
+  /* fit the glyph to the pad width so long words & sentences stay big and traceable */
+  padCtx.fillStyle='rgba(35,38,74,.13)';
+  padCtx.textAlign='center'; padCtx.textBaseline='middle';
+  let size=Math.round(padH*0.7);
+  while(size>16){
+    padCtx.font='600 '+size+'px "Noto Sans Gujarati"';
+    if(padCtx.measureText(padGlyph).width <= padW*0.92) break;
+    size-=3;
+  }
+  padCtx.fillText(padGlyph, padW/2, padH/2 + size*0.06);
+  padCtx.restore();
+}
+function clearPad(){ if(padCtx) drawGuide(); }
+window.addEventListener('resize',()=>{ if(document.getElementById('scrim').classList.contains('show')&&padGlyph) initPad(padGlyph); });
+
+/* =========================================================
+   8) QUIZ (letters + vocab)
+   ========================================================= */
+let qItems=[], qIdx=0, qScore=0, qLock=false;
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+function startQuiz(){
+  const data=moduleData(currentModule);
+  qItems=shuffle(data).slice(0,Math.min(10,data.length));
+  qIdx=0; qScore=0; renderQuiz();
+}
+function renderQuiz(){
+  const el=document.getElementById('paneQuiz');
+  if(qIdx>=qItems.length){ renderQuizDone(el); return; }
+  const it=qItems[qIdx];
+  const pool=moduleData(currentModule).filter(x=>x.g!==it.g);
+  const opts=shuffle([it, ...shuffle(pool).slice(0,3)]);
+  const askMeaning=currentModule.type==='vocab';
+  el.innerHTML=`<div class="quiz">
+    <div class="q-top"><span class="q-count">${qIdx+1} / ${qItems.length}</span>
+      <div class="q-bar"><i style="width:${Math.round(100*qIdx/qItems.length)}%"></i></div></div>
+    <div class="prompt"><div class="label">${askMeaning?'What does this mean?':'Which sound is this?'}</div>
+      <div class="bigq${it.g.length>4?' small':''}">${it.g}</div></div>
+    <div class="opts">${opts.map(o=>
+      `<button class="opt" onclick="answer(this,'${o.g.replace(/'/g,"\\'")}','${it.g.replace(/'/g,"\\'")}')">${askMeaning?o.m:`<b>${o.r}</b>`}</button>`).join('')}</div>
+  </div>`;
+}
+function answer(btn,chosen,correct){
+  if(qLock) return; qLock=true;
+  const ok=chosen===correct;
+  btn.classList.add(ok?'right':'wrong');
+  if(ok) qScore++;
+  setTimeout(()=>{ qLock=false; qIdx++; renderQuiz(); }, ok?550:1100);
+}
+function renderQuizDone(el){
+  const pct=Math.round(100*qScore/qItems.length);
+  const p=prog(); const id=currentModule.id;
+  if(!p[id]) p[id]={seen:{}};
+  if(!p[id].quiz||pct>p[id].quiz) p[id].quiz=pct;
+  if(pct>=70) p[id].done=true;
+  saveDB();
+  el.innerHTML=`<div class="quiz quiz-done">
+    <div class="score">${pct}%</div>
+    <p>${pct>=70?'લેસન પૂરું! Lesson complete ✓':'Good try — 70% marks it complete. Go again!'}</p>
+    <button class="btn" onclick="startQuiz()">Try again</button>
+    <button class="btn ghost" onclick="goHome()" style="margin-left:8px">Back to course</button>
+  </div>`;
+}
+
+/* =========================================================
+   9) PRINT WORKSHEET
+   ========================================================= */
+function printSheet(){
+  const m=currentModule; let items=[];
+  if(m.type==='letters'||m.type==='vocab') items=moduleData(m).map(x=>x.g);
+  else if(m.type==='barakhadi') items=baraRow(baraSel).map(x=>x.g);
+  else if(m.type==='numbers'){ for(let n=numLo;n<=Math.min(numHi,numLo+19);n++) items.push(gujNum(n)); }
+  const ws=document.getElementById('worksheet');
+  ws.innerHTML=`<div class="ws-head">Sheekho Gujarati — ${m.title}</div>
+    <div class="ws-sub">Trace each faint letter, then copy it in the space. Name: ______________</div>`+
+    items.slice(0,14).map(g=>`<div class="ws-row"><span class="wg">${g}</span><span class="wt">${g} ${g}</span></div>`).join('');
+  window.print();
+}
+
+/* =========================================================
+   10) SPEECH
+   ========================================================= */
+let VOICE=null, voiceHintShown=false, toastTimer=null;
+function toast(msg,ms){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'), ms||3800);
+}
+function loadVoices(){
+  try{
+    const vs=speechSynthesis.getVoices();
+    VOICE=vs.find(v=>v.lang&&v.lang.toLowerCase().indexOf('gu')===0)
+        ||vs.find(v=>v.name&&/gujarati/i.test(v.name))
+        ||vs.find(v=>v.lang&&v.lang.toLowerCase().indexOf('hi')===0)
+        ||null;
+  }catch(e){}
+}
+if('speechSynthesis' in window){ loadVoices(); speechSynthesis.onvoiceschanged=loadVoices; }
+function speak(t){
+  if(!('speechSynthesis' in window)){ toast('This browser cannot speak — try Chrome.'); return; }
+  try{
+    loadVoices();
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(t);
+    u.lang='gu-IN'; if(VOICE) u.voice=VOICE;
+    u.rate=.8; u.pitch=1; u.volume=1;
+    /* Android Chrome quirks: brief delay after cancel(), and resume() in case the engine is paused */
+    setTimeout(function(){ try{ speechSynthesis.resume(); speechSynthesis.speak(u); }catch(e){} }, 90);
+    if(!VOICE && !voiceHintShown){
+      voiceHintShown=true;
+      toast('If you hear nothing: install "Google Text-to-Speech" and add the Gujarati voice in tablet Settings → Text-to-speech.', 6500);
+    }
+  }catch(e){}
+}
+
+/* =========================================================
+   11) LOGIN
+   ========================================================= */
+let pendingAcct=null;
+function showLogin(){
+  const ls=document.getElementById('loginScreen');
+  ls.classList.add('show');
+  document.getElementById('loginCards').innerHTML=ACCOUNTS.map(a=>
+    `<button class="login-card${pendingAcct&&pendingAcct.user===a.user?' sel':''}" onclick="selectAccount('${a.user}')">
+      <span class="lc-av">${a.name.charAt(0)}</span><span class="lc-name">${a.name}</span></button>`).join('');
+  document.getElementById('pinRow').style.display=pendingAcct?'flex':'none';
+  document.getElementById('loginError').textContent='';
+}
+function selectAccount(user){
+  pendingAcct=ACCOUNTS.find(a=>a.user===user);
+  showLogin();
+  const inp=document.getElementById('pinInput'); inp.value=''; inp.focus();
+}
+async function tryLogin(){
+  if(!pendingAcct) return;
+  const pin=document.getElementById('pinInput').value.trim();
+  if(pin!==pendingAcct.pin){ document.getElementById('loginError').textContent='PIN ખોટો છે — wrong PIN, try again.'; return; }
+  CURRENT={...pendingAcct}; pendingAcct=null;
+  loadDB();
+  if(CURRENT.role==='learner'&&CLOUD_ON){
+    const cloud=await cloudLoad(CURRENT.user);
+    if(cloud&&cloud.prog){
+      const localN=Object.keys(DB.prog).length, cloudN=Object.keys(cloud.prog).length;
+      if(cloudN>=localN) DB.prog=cloud.prog;
+      saveDB();
+    }
+  }
+  document.getElementById('loginScreen').classList.remove('show');
+  updateWho(); goHome();
+}
+function logout(){
+  if(!CURRENT){ showLogin(); return; }
+  CURRENT=null; pendingAcct=null; updateWho();
+  document.getElementById('lesson').classList.remove('active');
+  document.getElementById('parentDash').style.display='none';
+  document.getElementById('home').style.display='block';
+  renderHome(); showLogin();
+}
+function updateWho(){
+  document.getElementById('whoAvatar').textContent=CURRENT?CURRENT.name.charAt(0):'?';
+  document.getElementById('whoName').textContent=CURRENT?CURRENT.name:'Log in';
+}
+
+/* =========================================================
+   12) PARENT DASHBOARD
+   ========================================================= */
+function summarize(progObj){
+  let done=0, pct=0;
+  MODULES.forEach(m=>{
+    const p=(progObj||{})[m.id]||{};
+    const total=moduleItemCount(m);
+    let mp=0;
+    if(m.type==='concept'||m.type==='grammar') mp=p.done?100:0;
+    else{ const seen=p.seen?Object.keys(p.seen).length:0; mp=Math.round(100*Math.min(seen,total)/total); if(p.done) mp=100; }
+    if(mp===100) done++;
+    pct+=mp;
+  });
+  return {done, total:MODULES.length, pct:Math.round(pct/MODULES.length)};
+}
+function ago(ts){
+  if(!ts) return 'never';
+  const s=Math.floor((Date.now()-ts)/1000);
+  if(s<60) return 'just now';
+  if(s<3600) return Math.floor(s/60)+' min ago';
+  if(s<86400) return Math.floor(s/3600)+' hr ago';
+  return Math.floor(s/86400)+' day(s) ago';
+}
+function buildKidCard(acct,data){
+  const progObj=data&&data.prog?data.prog:null;
+  const sum=summarize(progObj);
+  let mods=MODULES.map(m=>{
+    const p=(progObj||{})[m.id]||{};
+    const total=moduleItemCount(m);
+    let mp; if(m.type==='concept'||m.type==='grammar') mp=p.done?100:0;
+    else{ const seen=p.seen?Object.keys(p.seen).length:0; mp=Math.round(100*Math.min(seen,total)/total); if(p.done) mp=100; }
+    const d=mp===100;
+    return `<div class="km${d?' kdone':''}"><span class="km-ic">${d?'✓':'·'}</span>
+      <span class="km-name">${m.sub.replace('ધોરણ','ધો.')} · ${m.title}</span>
+      <span class="km-detail">${d?'done':(mp+'%')}${p.quiz?` · quiz ${p.quiz}%`:''}</span></div>`;
+  }).join('');
+  return `<div class="kid-card"><div class="kid-top">
+      <span class="kid-av">${acct.name.charAt(0)}</span>
+      <div class="kid-id"><h3>${acct.name}</h3>
+        <div class="kid-meta">${data?('Last activity: '+ago(data.updated)):'No activity yet'}</div></div>
+      <span class="kid-pct">${sum.pct}%</span></div>
+    <div class="kid-bar"><i style="width:${sum.pct}%"></i></div>
+    <div class="kid-meta" style="margin-bottom:10px"><b>${sum.done}</b> of ${sum.total} lessons complete</div>
+    <div class="kid-mods">${mods}</div></div>`;
+}
+async function renderParentDashboard(){
+  const el=document.getElementById('parentDash');
+  el.innerHTML=`<div class="dash-head"><h2>Parent dashboard</h2></div><p class="dash-loading">Loading progress…</p>`;
+  if(!CLOUD_ON){
+    el.innerHTML=`<div class="dash-head"><h2>Parent dashboard</h2></div>
+      <div class="dash-setup"><h2>Cloud sync is off</h2>
+      <p>The dashboard reads each child's progress from the online database. It works once the app is hosted online (so all devices share the same link) — progress then updates automatically every time they practise.</p></div>`;
+    return;
+  }
+  const kids=ACCOUNTS.filter(a=>a.role==='learner');
+  let h=`<div class="dash-head"><h2>Parent dashboard</h2></div>`;
+  for(const k of kids){
+    const data=await cloudLoad(k.user);
+    h+=buildKidCard(k,data);
+  }
+  el.innerHTML=h;
+}
+
+/* =========================================================
+   13) BOOT
+   ========================================================= */
+(function boot(){
+  firebaseInit();
+  renderHome();
+  updateWho();
+  showLogin();
+})();
+</script>
+</body>
+</html>
