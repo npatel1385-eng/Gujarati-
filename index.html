@@ -370,7 +370,7 @@
       <button class="btn" onclick="tryLogin()">Log in</button>
     </div>
     <div class="login-error" id="loginError"></div>
-    <p style="margin-top:14px;font-size:11px;color:#8a8fb0">build 13 · <a href="javascript:void(0)" onclick="photoTest()" style="color:#8a8fb0;text-decoration:underline">📷 test photos</a></p>
+    <p style="margin-top:14px;font-size:11px;color:#8a8fb0">build 14 · <a href="javascript:void(0)" onclick="photoTest()" style="color:#8a8fb0;text-decoration:underline">📷 test photos</a></p>
   </div>
 </div>
 
@@ -1151,11 +1151,13 @@ async function wikiThumb(title){
 function proxied(u){ return 'https://images.weserv.nl/?url='+encodeURIComponent(u.replace(/^https?:\/\//,''))+'&w=560'; }
 
 async function photoTest(){
-  const d=document.getElementById('detail');
-  d.innerHTML='<button class="x" onclick="closeDetail()">✕</button><div class="detail-body"><h3 class="st-title">📷 Photo system self-test</h3><div id="ptLog" style="font-size:13px;line-height:1.9"></div></div>';
-  document.getElementById('scrim').classList.add('show');
+  let ov=document.getElementById('ptOverlay');
+  if(!ov){ ov=document.createElement('div'); ov.id='ptOverlay';
+    ov.style.cssText='position:fixed;inset:0;z-index:9999;background:#FBF6EC;overflow:auto;padding:22px 18px;font-family:Inter,sans-serif';
+    document.body.appendChild(ov); }
+  ov.innerHTML='<button onclick="document.getElementById(\'ptOverlay\').remove()" style="float:right;font-size:18px;border:none;background:none;cursor:pointer">✕ close</button><h3 style="margin:0 0 10px">📷 Photo system self-test</h3><div id="ptLog" style="font-size:13.5px;line-height:2"></div>';
   const log=m=>{ document.getElementById('ptLog').innerHTML+=m+'<br>'; };
-  log('App build: <b>13</b>');
+  log('App build: <b>14</b>');
   log('Testing… each step takes up to 8s.');
   const r1=await tryActionApi('en.wikipedia.org','Taj Mahal');
   log('1. Wikipedia API (main): '+(r1?'✅ OK':'❌ failed'));
