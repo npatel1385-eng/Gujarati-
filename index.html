@@ -1114,25 +1114,37 @@ function printCert(pct){
    REAL PHOTOS — loaded live from Wikipedia (free-license)
    ========================================================= */
 const WIKICACHE={}; let WIKI_API_FAIL=0, WIKI_IMG_FAIL=0;
+function fetchT(url,ms){
+  return new Promise((res)=>{
+    const ctl=('AbortController' in window)?new AbortController():null;
+    const timer=setTimeout(()=>{ try{ctl&&ctl.abort();}catch(e){} res(null); }, ms||8000);
+    fetch(url, ctl?{signal:ctl.signal}:{})
+      .then(r=>{ clearTimeout(timer); res(r&&r.ok?r:null); })
+      .catch(()=>{ clearTimeout(timer); res(null); });
+  });
+}
+async function tryActionApi(host,title){
+  const r=await fetchT('https://'+host+'/w/api.php?action=query&format=json&origin=*&prop=pageimages&piprop=thumbnail&pithumbsize=560&redirects=1&titles='+encodeURIComponent(title),8000);
+  if(!r) return null;
+  try{ const j=await r.json(); const pgs=j&&j.query&&j.query.pages;
+    if(!pgs) return null;
+    const pg=pgs[Object.keys(pgs)[0]];
+    return (pg&&pg.thumbnail&&pg.thumbnail.source)||null;
+  }catch(e){ return null; }
+}
 async function wikiThumb(title){
   if(WIKICACHE[title]) return WIKICACHE[title];
-  try{ const c=localStorage.getItem('wimg3:'+title); if(c){ WIKICACHE[title]=c; return c; } }catch(e){}
-  let u=null;
-  /* Route 1: action API with origin=* (CORS-guaranteed) */
-  try{
-    const r=await fetch('https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&piprop=thumbnail&pithumbsize=560&redirects=1&titles='+encodeURIComponent(title));
-    if(r.ok){ const j=await r.json(); const pgs=j&&j.query&&j.query.pages;
-      if(pgs){ const pg=pgs[Object.keys(pgs)[0]]; u=pg&&pg.thumbnail&&pg.thumbnail.source||null; } }
-  }catch(e){}
-  /* Route 2: REST summary */
-  if(!u){ try{
-    const r=await fetch('https://en.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(title));
-    if(r.ok){ const j=await r.json();
-      u=(j.thumbnail&&j.thumbnail.source)||(j.originalimage&&j.originalimage.source)||null; }
-  }catch(e){} }
+  try{ const c=localStorage.getItem('wimg4:'+title); if(c){ WIKICACHE[title]=c; return c; } }catch(e){}
+  let u=await tryActionApi('en.wikipedia.org',title);          /* route 1: main API */
+  if(!u) u=await tryActionApi('en.m.wikipedia.org',title);     /* route 2: mobile host — often unfiltered */
+  if(!u){                                                       /* route 3: REST summary */
+    const r=await fetchT('https://en.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(title),8000);
+    if(r){ try{ const j=await r.json();
+      u=(j.thumbnail&&j.thumbnail.source)||(j.originalimage&&j.originalimage.source)||null; }catch(e){} }
+  }
   if(!u){ WIKI_API_FAIL++; return null; }
   WIKICACHE[title]=u;
-  try{ localStorage.setItem('wimg3:'+title,u); }catch(e){}
+  try{ localStorage.setItem('wimg4:'+title,u); }catch(e){}
   return u;
 }
 function proxied(u){ return 'https://images.weserv.nl/?url='+encodeURIComponent(u.replace(/^https?:\/\//,''))+'&w=560'; }
@@ -1147,7 +1159,7 @@ function hydrateGalleries(root){
     const settle=()=>{ doneCount++;
       if(doneCount===items.length){
         if(okCount) note.textContent='📷 Real photos from Wikipedia (free-licensed).';
-        else if(WIKI_API_FAIL&&!WIKI_IMG_FAIL) note.textContent='📷 Could not reach the Wikipedia photo service (en.wikipedia.org/w/api.php seems blocked on this network).';
+        else if(WIKI_API_FAIL&&!WIKI_IMG_FAIL) note.textContent='📷 This network is silently dropping requests to Wikipedia data services (tried 3 routes). Photos will appear on another network — test once on a phone hotspot. Check tablet Settings → Connections → Private DNS, and any ad-block/parental filter on the router.';
         else if(WIKI_IMG_FAIL) note.textContent='📷 The photo server (upload.wikimedia.org) seems blocked on this network — even via backup route.';
         else note.textContent='📷 Photos could not load — check the internet connection.';
       }};
