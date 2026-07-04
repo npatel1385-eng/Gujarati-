@@ -279,6 +279,7 @@
     <div class="tabs" id="lTabs"></div>
     <div class="pane" id="paneLearn"></div>
     <div class="pane" id="paneQuiz"></div>
+    <div class="pane" id="paneEx"></div>
   </section>
   <section id="parentDash" style="display:none"></section>
 </main>
@@ -572,8 +573,10 @@ function openModule(id){
 function buildTabs(){
   const m=currentModule; const t=document.getElementById('lTabs');
   const hasQuiz=(m.type==='letters'||m.type==='vocab');
+  const hasEx=(m.type!=='concept');
   const hasPrint=(m.type==='letters'||m.type==='vocab'||m.type==='barakhadi'||m.type==='numbers');
   let h=`<button class="tab on" data-p="learn" onclick="showPane('learn')">Learn</button>`;
+  if(hasEx) h+=`<button class="tab" data-p="ex" onclick="showPane('ex')">Practice · 100</button>`;
   if(hasQuiz) h+=`<button class="tab" data-p="quiz" onclick="showPane('quiz')">Quiz</button>`;
   if(hasPrint) h+=`<button class="tab" data-p="print" onclick="printSheet()">Print worksheet</button>`;
   t.innerHTML=h;
@@ -583,8 +586,10 @@ function showPane(p){
   document.querySelectorAll('#lTabs .tab').forEach(b=>b.classList.toggle('on',b.dataset.p===p));
   document.getElementById('paneLearn').style.display=p==='learn'?'block':'none';
   document.getElementById('paneQuiz').style.display=p==='quiz'?'block':'none';
+  document.getElementById('paneEx').style.display=p==='ex'?'block':'none';
   if(p==='learn') renderLearn();
   if(p==='quiz') startQuiz();
+  if(p==='ex') startPractice();
 }
 function completeCTA(){
   const m=currentModule, p=prog()[m.id]||{};
@@ -633,7 +638,7 @@ function renderBara(el){
     `<button class="cbtn${i===baraSel?' on':''}${seen[i]?'':''}" style="${seen[i]&&i!==baraSel?'border-color:var(--leaf)':''}" onclick="selectCons(${i})">${c}</button>`).join('')+`</div>`;
   const row=baraRow(baraSel);
   let grid=`<div class="lgrid">`+row.map((it,i)=>
-    `<button class="lcard" onclick="speak('${it.g}')"><span class="g">${it.g}</span><span class="rom">${it.r}</span><span class="en">tap to hear</span></button>`).join('')+`</div>`;
+    `<button class="lcard" onclick="openBara(${i})"><span class="g">${it.g}</span><span class="rom">${it.r}</span><span class="en">hear + trace</span></button>`).join('')+`</div>`;
   el.innerHTML=picker+grid+`<p style="margin-top:14px;color:var(--ink-soft);font-size:14px">Viewed rows: <b>${Object.keys(seen).length} / ${BCONS.length}</b> — open every letter's row to finish this lesson.</p>`+completeCTA();
 }
 function selectCons(i){ baraSel=i; seeItem(i); renderBara(document.getElementById('paneLearn')); }
@@ -643,7 +648,7 @@ function renderNumbers(el){
     `<button class="rtab${lo===numLo?' on':''}" onclick="showRange(${lo},${hi})">${lo}–${hi}</button>`).join('')+`</div>`;
   let cards=`<div class="lgrid">`;
   for(let n=numLo;n<=numHi;n++){
-    cards+=`<button class="lcard" onclick="speak('${numWord(n)}')">
+    cards+=`<button class="lcard" onclick="openNum(${n})">
       <span class="g">${gujNum(n)}</span><span class="rom" style="font-family:var(--guj);font-size:17px">${numWord(n)}</span><span class="en">${numRom(n)} · ${n}</span></button>`;
   }
   cards+=`</div>`;
@@ -663,27 +668,39 @@ function showRange(lo,hi){
 function openDetail(i){
   const m=currentModule, it=moduleData(m)[i]; if(!it) return;
   seeItem(i);
+  detailShow(it);
+  if(m.type==='vocab'||m.type==='letters') renderLearn();
+}
+function openBara(i){
+  const row=baraRow(baraSel); const it=row[i]; if(!it) return;
+  detailShow({g:it.g, r:it.r, m:'બારાખડી — tap 🔊, then trace it'});
+}
+function openNum(n){
+  detailShow({g:gujNum(n), r:numWord(n), m:numRom(n)+' · '+n, say:numWord(n)});
+}
+function detailShow(it){
+  const say=(it.say||it.g).replace(/'/g,"\\'");
   const d=document.getElementById('detail');
   d.innerHTML=`<button class="x" onclick="closeDetail()">✕</button>
     <div class="detail-top"><div class="ghost">${it.g.charAt(0)}</div>
       <div class="big" style="${it.g.length>6?'font-size:44px':''}">${it.g}</div>
       <div class="rom">${it.r}</div>
-      <button class="speak" onclick="speak('${it.g.replace(/'/g,"\\'")}')">🔊 Say it</button></div>
+      <button class="speak" onclick="speak('${say}')">🔊 Say it</button></div>
     <div class="detail-body">
       ${it.m?`<div class="kv"><div class="k">Meaning / sound</div><div class="v"><span class="meaning">${it.m}</span></div></div>`:''}
       <div class="trace-wrap"><h4>Trace it <button onclick="clearPad()">Clear</button></h4>
       <canvas class="pad" id="pad"></canvas>
-      <p style="margin-top:8px;font-size:12.5px;color:var(--ink-soft)">Trace over the faint letter with your finger or a stylus.</p></div>
+      <p style="margin-top:8px;font-size:12.5px;color:var(--ink-soft)">Trace over the faint letters with your finger or a stylus.</p></div>
     </div>`;
   document.getElementById('scrim').classList.add('show');
   requestAnimationFrame(()=>initPad(it.g));
-  if(m.type==='vocab'||m.type==='letters') renderLearn();
 }
 function closeDetail(){ document.getElementById('scrim').classList.remove('show'); }
-let padCtx=null, padGlyph='', drawing=false, padW=0, padH=0;
-function initPad(glyph){
-  const c=document.getElementById('pad'); if(!c) return;
-  padGlyph=glyph;
+let padCtx=null, padGlyph='', drawing=false, padW=0, padH=0, padId='pad', padTouched=false;
+function initPad(glyph,id){
+  padId=id||'pad';
+  const c=document.getElementById(padId); if(!c) return;
+  padGlyph=glyph; padTouched=false;
   const w=(c.parentElement.clientWidth||300);
   /* single letter → tall square; word → wide strip; sentence → wider strip */
   const chars=[...glyph].length;
@@ -698,7 +715,7 @@ function initPad(glyph){
   /* redraw once the Gujarati font is actually loaded (fixes blank/box glyphs) */
   if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(padGlyph===glyph&&!drawing) drawGuide(); });
   const pos=e=>{ const r=c.getBoundingClientRect(); return [e.clientX-r.left, e.clientY-r.top]; };
-  c.onpointerdown=e=>{ e.preventDefault(); drawing=true;
+  c.onpointerdown=e=>{ e.preventDefault(); drawing=true; padTouched=true;
     try{c.setPointerCapture(e.pointerId);}catch(_){}
     const [x,y]=pos(e); padCtx.beginPath(); padCtx.moveTo(x,y); };
   c.onpointermove=e=>{ if(!drawing) return; e.preventDefault();
@@ -727,7 +744,7 @@ function drawGuide(){
   padCtx.restore();
 }
 function clearPad(){ if(padCtx) drawGuide(); }
-window.addEventListener('resize',()=>{ if(document.getElementById('scrim').classList.contains('show')&&padGlyph) initPad(padGlyph); });
+window.addEventListener('resize',()=>{ if(document.getElementById('scrim').classList.contains('show')&&padGlyph) initPad(padGlyph,padId); });
 
 /* =========================================================
    8) QUIZ (letters + vocab)
@@ -775,6 +792,96 @@ function renderQuizDone(el){
     <button class="btn" onclick="startQuiz()">Try again</button>
     <button class="btn ghost" onclick="goHome()" style="margin-left:8px">Back to course</button>
   </div>`;
+}
+
+/* =========================================================
+   8b) PRACTICE - 100-exercise goal per lesson
+   ========================================================= */
+let EX=null;
+function rnd(n){ return Math.floor(Math.random()*n); }
+function pick(arr){ return arr[rnd(arr.length)]; }
+function exCount(){ const p=prog()[currentModule.id]||{}; return p.ex||0; }
+function exItem(m){
+  if(m.type==='barakhadi'){ const ci=rnd(BCONS.length); const row=baraRow(ci); const it=pick(row); return {g:it.g,r:it.r,m:'syllable of '+BCONS[ci][0]}; }
+  if(m.type==='numbers'){
+    const w=Math.random(); const n= w<.5? 1+rnd(100) : w<.8? 101+rnd(400) : 501+rnd(500);
+    return {g:gujNum(n), r:numWord(n), m:String(n), say:numWord(n), n:n};
+  }
+  if(m.type==='grammar'){ const g=GRAMMAR[m.gk]; const row=pick(g.rows); return {g:row[0], r:row[1]||'', m:row[row.length-1]}; }
+  return pick(moduleData(m));
+}
+function exDistract(m,it,field){
+  const out=new Set(); let guard=0;
+  while(out.size<3&&guard<80){
+    guard++; const o=exItem(m);
+    if(o[field]!==it[field]&&o.g!==it.g) out.add(o[field]);
+  }
+  return [...out];
+}
+function genExercise(m){
+  let kinds;
+  if(m.type==='grammar') kinds=['g2x','x2g'];
+  else kinds=['g2x','x2g','audio','trace','trace'];
+  const kind=pick(kinds);
+  const it=exItem(m);
+  const xField=(m.type==='vocab'||m.type==='numbers'||m.type==='grammar')?'m':'r';
+  return {kind,it,xField};
+}
+function startPractice(){ exNew(); }
+function exNew(){ EX=genExercise(currentModule); renderEx(); }
+function exHead(){
+  const c=Math.min(exCount(),100);
+  return `<div class="q-top"><span class="q-count">Practice: <b>${c}</b> / 100 ${c>=100?'&#10003; !':''}</span>
+    <div class="q-bar"><i style="width:${c}%"></i></div></div>`;
+}
+function renderEx(){
+  const el=document.getElementById('paneEx'); if(!EX){ el.innerHTML=''; return; }
+  const m=currentModule, it=EX.it, xf=EX.xField;
+  const say=(it.say||it.g).replace(/'/g,"\\'");
+  let body='';
+  if(EX.kind==='trace'){
+    body=`<div class="prompt"><div class="label">Trace this - say it out loud as you write</div>
+      <div class="bigq${it.g.length>4?' small':''}">${it.g}</div>
+      <div style="margin:4px 0 10px"><button class="speak" onclick="speak('${say}')">&#128266; Hear it</button>
+      <span style="font-size:14px;color:var(--ink-soft);margin-left:8px">${it.r}${it.m?' - '+it.m:''}</span></div></div>
+      <div class="trace-wrap"><h4>Trace pad <button onclick="clearPad()">Clear</button></h4>
+      <canvas class="pad" id="expad"></canvas></div>
+      <div style="margin-top:12px;text-align:center"><button class="btn" onclick="exTraceDone()">Done - next &#10132;</button></div>`;
+  }else if(EX.kind==='audio'){
+    const opts=shuffle([it.g].concat(exDistract(m,it,'g')));
+    body=`<div class="prompt"><div class="label">Listen, then choose what you heard</div>
+      <div style="margin:10px 0"><button class="speak" onclick="speak('${say}')" style="font-size:16px;padding:12px 22px">&#128266; Play</button></div></div>
+      <div class="opts">${opts.map(o=>`<button class="opt" style="font-family:var(--guj);font-size:20px" data-ok="${o===it.g?1:0}" onclick="exPick(this)">${o}</button>`).join('')}</div>`;
+  }else if(EX.kind==='g2x'){
+    const opts=shuffle([it[xf]].concat(exDistract(m,it,xf)));
+    body=`<div class="prompt"><div class="label">${m.type==='numbers'?'Which number is this?':'What does this mean / sound like?'}</div>
+      <div class="bigq${it.g.length>4?' small':''}">${it.g}</div></div>
+      <div class="opts">${opts.map(o=>`<button class="opt" data-ok="${o===it[xf]?1:0}" onclick="exPick(this)">${o}</button>`).join('')}</div>`;
+  }else{
+    const opts=shuffle([it.g].concat(exDistract(m,it,'g')));
+    body=`<div class="prompt"><div class="label">Which one is <b>${it[xf]}</b>?</div></div>
+      <div class="opts">${opts.map(o=>`<button class="opt" style="font-family:var(--guj);font-size:20px" data-ok="${o===it.g?1:0}" onclick="exPick(this)">${o}</button>`).join('')}</div>`;
+  }
+  el.innerHTML=`<div class="quiz">${exHead()}${body}</div>`;
+  if(EX.kind==='trace') requestAnimationFrame(()=>initPad(it.g,'expad'));
+}
+function exCredit(){
+  const p=prog(); const id=currentModule.id;
+  if(!p[id]) p[id]={seen:{}};
+  p[id].ex=(p[id].ex||0)+1;
+  if(p[id].ex===100){ p[id].done=true; toast('100 exercises done! Lesson mastered.'); }
+  saveDB();
+}
+let exLock=false;
+function exPick(btn){
+  if(exLock) return;
+  const ok=btn.dataset.ok==='1';
+  btn.classList.add(ok?'right':'wrong');
+  if(ok){ exLock=true; exCredit(); setTimeout(function(){exLock=false; exNew();},600); }
+}
+function exTraceDone(){
+  if(!padTouched){ toast('Trace the letters first, then tap Done.'); return; }
+  exCredit(); exNew();
 }
 
 /* =========================================================
@@ -911,7 +1018,7 @@ function buildKidCard(acct,data){
     const d=mp===100;
     return `<div class="km${d?' kdone':''}"><span class="km-ic">${d?'✓':'·'}</span>
       <span class="km-name">${m.sub.replace('ધોરણ','ધો.')} · ${m.title}</span>
-      <span class="km-detail">${d?'done':(mp+'%')}${p.quiz?` · quiz ${p.quiz}%`:''}</span></div>`;
+      <span class="km-detail">${d?'done':(mp+'%')}${p.quiz?` · quiz ${p.quiz}%`:''}${p.ex?` · ${Math.min(p.ex,100)}/100 ex`:''}</span></div>`;
   }).join('');
   return `<div class="kid-card"><div class="kid-top">
       <span class="kid-av">${acct.name.charAt(0)}</span>
