@@ -1116,16 +1116,19 @@ function printCert(pct){
 const WIKICACHE={};
 async function wikiThumb(title){
   if(WIKICACHE[title]) return WIKICACHE[title];
-  try{ const c=localStorage.getItem('wimg:'+title); if(c){ WIKICACHE[title]=c; return c; } }catch(e){}
+  try{ const c=localStorage.getItem('wimg2:'+title); if(c){ WIKICACHE[title]=c; return c; } }catch(e){}
+  /* Wikipedia action API with origin=* — the guaranteed-CORS way to get a page image */
+  const api='https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&piprop=thumbnail&pithumbsize=560&redirects=1&titles='+encodeURIComponent(title);
   try{
-    const r=await fetch('https://en.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(title));
+    const r=await fetch(api);
     if(!r.ok) return null;
     const j=await r.json();
-    /* prefer a medium thumb; fall back to the page original image; never upscale */
-    let u=(j.thumbnail&&j.thumbnail.source)||(j.originalimage&&j.originalimage.source);
+    const pages=j&&j.query&&j.query.pages; if(!pages) return null;
+    const pg=pages[Object.keys(pages)[0]];
+    const u=pg&&pg.thumbnail&&pg.thumbnail.source;
     if(!u) return null;
     WIKICACHE[title]=u;
-    try{ localStorage.setItem('wimg:'+title,u); }catch(e){}
+    try{ localStorage.setItem('wimg2:'+title,u); }catch(e){}
     return u;
   }catch(e){ return null; }
 }
@@ -1133,6 +1136,15 @@ function hydrateGalleries(root){
   (root||document).querySelectorAll('.wgal:not(.done)').forEach(gal=>{
     gal.classList.add('done');
     const items=gal.dataset.imgs.split('|');
+    let okCount=0, doneCount=0;
+    const note=document.createElement('p'); note.className='wgal-note';
+    note.textContent='📷 Loading real photos from Wikipedia…';
+    gal.insertAdjacentElement('afterend',note);
+    const settle=()=>{ doneCount++;
+      if(doneCount===items.length){
+        note.textContent = okCount? '📷 Real photos from Wikipedia (free-licensed).'
+          : '📷 Photos could not load — the tablet may be offline or Wikipedia may be blocked on this network.';
+      }};
     items.forEach(spec=>{
       const [title,cap]=spec.split('~');
       const fig=document.createElement('figure');
@@ -1140,14 +1152,13 @@ function hydrateGalleries(root){
       fig.innerHTML=`<div class="wimg-ph">📷</div><figcaption>${cap||title.replace(/_/g,' ')}</figcaption>`;
       gal.appendChild(fig);
       wikiThumb(title).then(u=>{
-        if(!u){ fig.remove(); return; }
+        if(!u){ fig.remove(); settle(); return; }
         const img=new Image();
-        img.onload=()=>{ fig.querySelector('.wimg-ph').replaceWith(img); };
-        img.onerror=()=>fig.remove();
+        img.onload=()=>{ fig.querySelector('.wimg-ph').replaceWith(img); okCount++; settle(); };
+        img.onerror=()=>{ fig.remove(); settle(); };
         img.src=u; img.alt=cap||title; img.className='wimg'; img.loading='lazy';
       });
     });
-    if(items.length) gal.insertAdjacentHTML('afterend','<p class="wgal-note">📷 Real photos load from Wikipedia when online.</p>');
   });
 }
 
