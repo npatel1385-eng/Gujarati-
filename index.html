@@ -1113,25 +1113,29 @@ function printCert(pct){
 /* =========================================================
    REAL PHOTOS — loaded live from Wikipedia (free-license)
    ========================================================= */
-const WIKICACHE={};
+const WIKICACHE={}; let WIKI_API_FAIL=0, WIKI_IMG_FAIL=0;
 async function wikiThumb(title){
   if(WIKICACHE[title]) return WIKICACHE[title];
-  try{ const c=localStorage.getItem('wimg2:'+title); if(c){ WIKICACHE[title]=c; return c; } }catch(e){}
-  /* Wikipedia action API with origin=* — the guaranteed-CORS way to get a page image */
-  const api='https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&piprop=thumbnail&pithumbsize=560&redirects=1&titles='+encodeURIComponent(title);
+  try{ const c=localStorage.getItem('wimg3:'+title); if(c){ WIKICACHE[title]=c; return c; } }catch(e){}
+  let u=null;
+  /* Route 1: action API with origin=* (CORS-guaranteed) */
   try{
-    const r=await fetch(api);
-    if(!r.ok) return null;
-    const j=await r.json();
-    const pages=j&&j.query&&j.query.pages; if(!pages) return null;
-    const pg=pages[Object.keys(pages)[0]];
-    const u=pg&&pg.thumbnail&&pg.thumbnail.source;
-    if(!u) return null;
-    WIKICACHE[title]=u;
-    try{ localStorage.setItem('wimg2:'+title,u); }catch(e){}
-    return u;
-  }catch(e){ return null; }
+    const r=await fetch('https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&piprop=thumbnail&pithumbsize=560&redirects=1&titles='+encodeURIComponent(title));
+    if(r.ok){ const j=await r.json(); const pgs=j&&j.query&&j.query.pages;
+      if(pgs){ const pg=pgs[Object.keys(pgs)[0]]; u=pg&&pg.thumbnail&&pg.thumbnail.source||null; } }
+  }catch(e){}
+  /* Route 2: REST summary */
+  if(!u){ try{
+    const r=await fetch('https://en.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(title));
+    if(r.ok){ const j=await r.json();
+      u=(j.thumbnail&&j.thumbnail.source)||(j.originalimage&&j.originalimage.source)||null; }
+  }catch(e){} }
+  if(!u){ WIKI_API_FAIL++; return null; }
+  WIKICACHE[title]=u;
+  try{ localStorage.setItem('wimg3:'+title,u); }catch(e){}
+  return u;
 }
+function proxied(u){ return 'https://images.weserv.nl/?url='+encodeURIComponent(u.replace(/^https?:\/\//,''))+'&w=560'; }
 function hydrateGalleries(root){
   (root||document).querySelectorAll('.wgal:not(.done)').forEach(gal=>{
     gal.classList.add('done');
@@ -1142,8 +1146,10 @@ function hydrateGalleries(root){
     gal.insertAdjacentElement('afterend',note);
     const settle=()=>{ doneCount++;
       if(doneCount===items.length){
-        note.textContent = okCount? '📷 Real photos from Wikipedia (free-licensed).'
-          : '📷 Photos could not load — the tablet may be offline or Wikipedia may be blocked on this network.';
+        if(okCount) note.textContent='📷 Real photos from Wikipedia (free-licensed).';
+        else if(WIKI_API_FAIL&&!WIKI_IMG_FAIL) note.textContent='📷 Could not reach the Wikipedia photo service (en.wikipedia.org/w/api.php seems blocked on this network).';
+        else if(WIKI_IMG_FAIL) note.textContent='📷 The photo server (upload.wikimedia.org) seems blocked on this network — even via backup route.';
+        else note.textContent='📷 Photos could not load — check the internet connection.';
       }};
     items.forEach(spec=>{
       const [title,cap]=spec.split('~');
@@ -1154,9 +1160,14 @@ function hydrateGalleries(root){
       wikiThumb(title).then(u=>{
         if(!u){ fig.remove(); settle(); return; }
         const img=new Image();
+        let triedProxy=false;
         img.onload=()=>{ fig.querySelector('.wimg-ph').replaceWith(img); okCount++; settle(); };
-        img.onerror=()=>{ fig.remove(); settle(); };
-        img.src=u; img.alt=cap||title; img.className='wimg'; img.loading='lazy';
+        img.onerror=()=>{
+          if(!triedProxy){ triedProxy=true; img.src=proxied(u); return; }
+          WIKI_IMG_FAIL++; fig.remove(); settle();
+        };
+        img.alt=cap||title; img.className='wimg'; img.loading='lazy';
+        img.src=u;
       });
     });
   });
