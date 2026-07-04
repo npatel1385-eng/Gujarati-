@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -371,7 +371,7 @@
       <button class="btn" onclick="tryLogin()">Log in</button>
     </div>
     <div class="login-error" id="loginError"></div>
-    <p style="margin-top:14px;font-size:11px;color:#8a8fb0">build 17 · <a href="javascript:void(0)" onclick="photoTest()" style="color:#8a8fb0;text-decoration:underline">🧪 test app</a></p>
+    <p style="margin-top:14px;font-size:11px;color:#8a8fb0">build 17-B · <a href="javascript:void(0)" onclick="photoTest()" style="color:#8a8fb0;text-decoration:underline">🧪 test app</a></p>
   </div>
 </div>
 
@@ -387,10 +387,14 @@
    1) ACCOUNTS  (names + PINs)
    ========================================================= */
 const ACCOUNTS=[
-  {user:'suhagi', name:'Suhagi', pin:'1111', role:'learner'},
-  {user:'suhana', name:'Suhana', pin:'2222', role:'learner'},
-  {user:'parent', name:'Parent', pin:'0000', role:'parent'},
-  {user:'papa', name:'Papa', pin:'3333', role:'learner', test:true},
+  {user:'kabir', name:'Kabir', pin:'1111', role:'learner'},
+  {user:'kiara', name:'Kiara', pin:'2222', role:'learner'},
+  {user:'kahir', name:'Kahir', pin:'3333', role:'learner'},
+  {user:'sheel', name:'Sheel', pin:'4444', role:'learner'},
+  {user:'shaya', name:'Shaya', pin:'5555', role:'learner'},
+  {user:'sufi',  name:'Sufi',  pin:'6666', role:'learner'},
+  {user:'manali', name:'Manali', pin:'0000', role:'parent'},
+  {user:'sweetu', name:'Sweetu', pin:'9999', role:'parent'},
 ];
 /* =========================================================
    2) FIREBASE  (cloud progress tracking)
@@ -421,7 +425,7 @@ async function cloudLoad(user){
   try{ const d=await fbDb.collection('progress').doc(user).get(); return d.exists?d.data():null; }
   catch(e){ console.warn(e); return null; }
 }
-const STORE_PREFIX='sheekho-gujarati-full:';
+const STORE_PREFIX='sheekho-gujarati-fam2:';
 let CURRENT=null, DB={prog:{}}, currentModule=null;
 function storeKey(){ return STORE_PREFIX+(CURRENT?CURRENT.user:'guest'); }
 function loadDB(){ DB={prog:{}}; try{const r=localStorage.getItem(storeKey()); if(r)DB=JSON.parse(r);}catch(e){} if(!DB.prog)DB.prog={}; if(!DB.pts)DB.pts=0; if(!DB.av)DB.av=[]; if(!DB.avSel)DB.avSel=''; }
@@ -818,8 +822,8 @@ const WRITING={
   letter:{title:'પત્રલેખન — Letter writing',long:true,
     tips:'<h4>Personal letter format</h4><p>1. ઉપર જમણે: તમારું ગામ/શહેર અને તારીખ. 2. સંબોધન: પ્રિય / પૂજ્ય + name. 3. પહેલી લીટી: ખબરઅંતર (કેમ છો?). 4. મુખ્ય વાત 3–5 વાક્યમાં. 5. અંત: તમારો/તમારી + તમારું નામ.</p><h4>Formal letter</h4><p>ઉપર: તારીખ, પ્રતિ (to whom), વિષય (subject) — પછી માનનીય શ્રી થી શરૂ કરો, ટૂંકમાં વાત કરો, અંતે આપનો વિશ્વાસુ + નામ.</p>',
     models:[
-      {t:'અંગત પત્ર — દાદીમાને · Personal letter to grandmother',g:'ન્યૂયોર્ક, તા. ૧૫ જૂન\n\nપૂજ્ય દાદીમા,\nસાદર પ્રણામ. અમે અહીં બધાં મજામાં છીએ. આશા છે કે તમે પણ મજામાં હશો. મેં આ વર્ષે ગુજરાતી શીખવાનું શરૂ કર્યું છે. હવે હું ગુજરાતી વાંચી અને લખી શકું છું. ઉનાળાની રજામાં અમે ભારત આવવાનાં છીએ. ત્યારે હું તમારી સાથે ગુજરાતીમાં જ વાત કરીશ. મમ્મી-પપ્પા તમને પ્રણામ કહે છે.\nતમારી વહાલી પૌત્રી,\nસુહાગી',m:'New York, 15 June. Dear Grandmother, respectful pranam. We are all well here and hope you are too. This year I started learning Gujarati — I can now read and write it. In summer vacation we are coming to India, and then I will speak with you only in Gujarati. Mummy-Pappa send their pranam. Your loving granddaughter, Suhagi.'},
-      {t:'ઔપચારિક પત્ર — રજા માટે અરજી · Formal leave application',g:'તા. ૧૦ જુલાઈ\nપ્રતિ, આચાર્યશ્રી, જ્ઞાનદીપ શાળા\nવિષય: બે દિવસની રજા બાબત\n\nમાનનીય શ્રી,\nસવિનય જણાવવાનું કે મારે મારા પરિવાર સાથે એક ધાર્મિક પ્રસંગમાં જવાનું હોવાથી હું તા. ૧૨ અને ૧૩ જુલાઈના રોજ શાળાએ આવી શકીશ નહીં. તો મને બે દિવસની રજા આપવા વિનંતી છે. હું રજા દરમિયાનનો અભ્યાસ પૂરો કરી લઈશ.\nઆપની વિશ્વાસુ,\nસુહાના, ધોરણ ૭',m:'10 July. To the Principal, Gyandeep School. Subject: two days leave. Respected sir, I humbly inform that I must attend a family religious function, so I cannot attend school on 12–13 July. Kindly grant me two days leave; I will complete the missed studies. Yours faithfully, Suhana, Std 7.'}],
+      {t:'અંગત પત્ર — દાદીમાને · Personal letter to grandmother',g:'ન્યૂયોર્ક, તા. ૧૫ જૂન\n\nપૂજ્ય દાદીમા,\nસાદર પ્રણામ. અમે અહીં બધાં મજામાં છીએ. આશા છે કે તમે પણ મજામાં હશો. મેં આ વર્ષે ગુજરાતી શીખવાનું શરૂ કર્યું છે. હવે હું ગુજરાતી વાંચી અને લખી શકું છું. ઉનાળાની રજામાં અમે ભારત આવવાનાં છીએ. ત્યારે હું તમારી સાથે ગુજરાતીમાં જ વાત કરીશ. મમ્મી-પપ્પા તમને પ્રણામ કહે છે.\nતમારી વહાલી પૌત્રી,\nકિયારા',m:'New York, 15 June. Dear Grandmother, respectful pranam. We are all well here and hope you are too. This year I started learning Gujarati — I can now read and write it. In summer vacation we are coming to India, and then I will speak with you only in Gujarati. Mummy-Pappa send their pranam. Your loving granddaughter, Suhagi.'},
+      {t:'ઔપચારિક પત્ર — રજા માટે અરજી · Formal leave application',g:'તા. ૧૦ જુલાઈ\nપ્રતિ, આચાર્યશ્રી, જ્ઞાનદીપ શાળા\nવિષય: બે દિવસની રજા બાબત\n\nમાનનીય શ્રી,\nસવિનય જણાવવાનું કે મારે મારા પરિવાર સાથે એક ધાર્મિક પ્રસંગમાં જવાનું હોવાથી હું તા. ૧૨ અને ૧૩ જુલાઈના રોજ શાળાએ આવી શકીશ નહીં. તો મને બે દિવસની રજા આપવા વિનંતી છે. હું રજા દરમિયાનનો અભ્યાસ પૂરો કરી લઈશ.\nઆપની વિશ્વાસુ,\nસુફી, ધોરણ ૭',m:'10 July. To the Principal, Gyandeep School. Subject: two days leave. Respected sir, I humbly inform that I must attend a family religious function, so I cannot attend school on 12–13 July. Kindly grant me two days leave; I will complete the missed studies. Yours faithfully, Suhana, Std 7.'}],
     prompts:[
       {q:'મિત્રને પત્ર — તમારી નવી શાળા વિશે લખો. (Write to a friend about your new school.)',a:'મુદ્દા: સ્થળ-તારીખ → પ્રિય મિત્ર → ખબરઅંતર → નવી શાળા કેવી છે (મકાન, શિક્ષકો, મિત્રો) → મળવા બોલાવો → તારો મિત્ર/તારી બહેનપણી + નામ.',ar:''},
       {q:'દાદાજીને પત્ર — દિવાળીની શુભેચ્છા આપો. (Diwali wishes to grandfather.)',a:'મુદ્દા: પ્રણામ → દિવાળીની શુભકામના → તમે શું કર્યું (દીવા, રંગોળી, મીઠાઈ) → તેમની તબિયત પૂછો → અંત.',ar:''},
@@ -991,7 +995,7 @@ function renderHome(){
     });
     h+=`</div></div>`;
   }
-  h+=`<p class="footer-note">Sheekho Gujarati · made with love for Suhagi &amp; Suhana</p>`;
+  h+=`<p class="footer-note">Sheekho Gujarati · made with love for Kabir, Kiara, Kahir, Sheel, Shaya &amp; Sufi</p>`;
   document.getElementById('home').innerHTML=h;
 }
 let PARENT_LEARN=false;
@@ -1267,7 +1271,7 @@ async function photoTest(){
     document.body.appendChild(ov); }
   ov.innerHTML='<button onclick="document.getElementById(\'ptOverlay\').remove()" style="float:right;font-size:18px;border:none;background:none;cursor:pointer">✕ close</button><h3 style="margin:0 0 10px">🧪 App health check</h3><div id="ptLog" style="font-size:13.5px;line-height:2"></div>';
   const log=m=>{ document.getElementById('ptLog').innerHTML+=m+'<br>'; };
-  log('App build: <b>17</b>');
+  log('App build: <b>17-B</b>');
   /* --- data integrity --- */
   let dErr=0;
   MODULES.forEach(m=>{
