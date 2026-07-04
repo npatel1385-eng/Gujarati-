@@ -370,7 +370,7 @@
       <button class="btn" onclick="tryLogin()">Log in</button>
     </div>
     <div class="login-error" id="loginError"></div>
-    <p style="margin-top:14px;font-size:11px;color:#8a8fb0">build 14 · <a href="javascript:void(0)" onclick="photoTest()" style="color:#8a8fb0;text-decoration:underline">📷 test photos</a></p>
+    <p style="margin-top:14px;font-size:11px;color:#8a8fb0">build 15 · <a href="javascript:void(0)" onclick="photoTest()" style="color:#8a8fb0;text-decoration:underline">📷 test photos</a></p>
   </div>
 </div>
 
@@ -1157,7 +1157,7 @@ async function photoTest(){
     document.body.appendChild(ov); }
   ov.innerHTML='<button onclick="document.getElementById(\'ptOverlay\').remove()" style="float:right;font-size:18px;border:none;background:none;cursor:pointer">✕ close</button><h3 style="margin:0 0 10px">📷 Photo system self-test</h3><div id="ptLog" style="font-size:13.5px;line-height:2"></div>';
   const log=m=>{ document.getElementById('ptLog').innerHTML+=m+'<br>'; };
-  log('App build: <b>14</b>');
+  log('App build: <b>15</b>');
   log('Testing… each step takes up to 8s.');
   const r1=await tryActionApi('en.wikipedia.org','Taj Mahal');
   log('1. Wikipedia API (main): '+(r1?'✅ OK':'❌ failed'));
@@ -1209,7 +1209,7 @@ function hydrateGalleries(root){
           if(!triedProxy){ triedProxy=true; img.src=proxied(u); return; }
           WIKI_IMG_FAIL++; fig.remove(); settle();
         };
-        img.alt=cap||title; img.className='wimg'; img.loading='lazy';
+        img.alt=cap||title; img.className='wimg';
         img.src=u;
       });
     });
