@@ -370,6 +370,7 @@
       <button class="btn" onclick="tryLogin()">Log in</button>
     </div>
     <div class="login-error" id="loginError"></div>
+    <p style="margin-top:14px;font-size:11px;color:#8a8fb0">build 13 · <a href="javascript:void(0)" onclick="photoTest()" style="color:#8a8fb0;text-decoration:underline">📷 test photos</a></p>
   </div>
 </div>
 
@@ -1148,6 +1149,34 @@ async function wikiThumb(title){
   return u;
 }
 function proxied(u){ return 'https://images.weserv.nl/?url='+encodeURIComponent(u.replace(/^https?:\/\//,''))+'&w=560'; }
+
+async function photoTest(){
+  const d=document.getElementById('detail');
+  d.innerHTML='<button class="x" onclick="closeDetail()">✕</button><div class="detail-body"><h3 class="st-title">📷 Photo system self-test</h3><div id="ptLog" style="font-size:13px;line-height:1.9"></div></div>';
+  document.getElementById('scrim').classList.add('show');
+  const log=m=>{ document.getElementById('ptLog').innerHTML+=m+'<br>'; };
+  log('App build: <b>13</b>');
+  log('Testing… each step takes up to 8s.');
+  const r1=await tryActionApi('en.wikipedia.org','Taj Mahal');
+  log('1. Wikipedia API (main): '+(r1?'✅ OK':'❌ failed'));
+  let r2=null; if(!r1){ r2=await tryActionApi('en.m.wikipedia.org','Taj Mahal'); log('2. Wikipedia API (mobile): '+(r2?'✅ OK':'❌ failed')); }
+  let r3=null;
+  if(!r1&&!r2){ const rr=await fetchT('https://en.wikipedia.org/api/rest_v1/page/summary/Taj_Mahal',8000);
+    if(rr){ try{ const j=await rr.json(); r3=(j.thumbnail&&j.thumbnail.source)||null; }catch(e){} }
+    log('3. Wikipedia REST: '+(r3?'✅ OK':'❌ failed')); }
+  const u=r1||r2||r3;
+  if(!u){ log('<b>Verdict: the tablet cannot fetch data from Wikipedia at all (all 3 routes). This is a device/browser-level block.</b>'); }
+  else{
+    log('Got photo address ✅ — now loading the image…');
+    const t1=await new Promise(res=>{ const i=new Image(); i.onload=()=>res(true); i.onerror=()=>res(false); i.src=u; });
+    log('4. Direct image (upload.wikimedia.org): '+(t1?'✅ OK':'❌ failed'));
+    if(!t1){ const t2=await new Promise(res=>{ const i=new Image(); i.onload=()=>res(true); i.onerror=()=>res(false); i.src=proxied(u); });
+      log('5. Proxy image (images.weserv.nl): '+(t2?'✅ OK':'❌ failed'));
+      log(t2?'<b>Verdict: photos should work — reopen a lesson.</b>':'<b>Verdict: image servers unreachable from this browser.</b>');
+    } else { log('<b>Verdict: everything works! Open Monuments & temples and photos should be there.</b>');
+      log('<img src="'+u+'" style="width:200px;border-radius:10px;margin-top:6px">'); }
+  }
+}
 function hydrateGalleries(root){
   (root||document).querySelectorAll('.wgal:not(.done)').forEach(gal=>{
     gal.classList.add('done');
