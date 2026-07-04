@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -1122,9 +1121,9 @@ async function wikiThumb(title){
     const r=await fetch('https://en.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(title));
     if(!r.ok) return null;
     const j=await r.json();
-    let u=j.thumbnail&&j.thumbnail.source;
+    /* prefer a medium thumb; fall back to the page original image; never upscale */
+    let u=(j.thumbnail&&j.thumbnail.source)||(j.originalimage&&j.originalimage.source);
     if(!u) return null;
-    u=u.replace(/\/(\d+)px-/, '/560px-');
     WIKICACHE[title]=u;
     try{ localStorage.setItem('wimg:'+title,u); }catch(e){}
     return u;
